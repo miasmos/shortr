@@ -1,0 +1,18 @@
+{
+  "name": "shortr-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "enums.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "bluebird": "^3.4.7",
+    "joi-browser": "^10.0.6"
+  }
+}
