@@ -4,8 +4,8 @@
 		"cert": "/etc/letsencrypt/live/shortr.li/cert.pem"
 	},
 	"localCertificate": {
-		"key": "/Volumes/Data/htdocs/shortr.li/server/app/cert/privkey.pem",
-		"cert": "/Volumes/Data/htdocs/shortr.li/server/app/cert/cert.pem"
+		"key": "A:\\http\\htdocs\\shortr.li\\server\\app\\cert\\privkey.pem",
+		"cert": "A:\\http\\htdocs\\shortr.li\\server\\app\\cert\\cert.pem"
 	},
 	"host": "shortr.li",
 	"protocol": "https"

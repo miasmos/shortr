@@ -1,5 +1,9 @@
 class Enums {
 	constructor() {
+		this.keys = {
+			ENTER: 13
+		}
+
 		this.error = {
 			message: {
 				"NOT_FOUND": "Whoops. That page doesn't exist.",

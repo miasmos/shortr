@@ -6,11 +6,11 @@ class Keypress {
 	}
 
 	PressedKey(e) {
-		return e.keyCode || e.which
+		return e.keyCode || e.which || e.target.value
 	}
 
 	IsPressed(e, key) {
-		return PressedKey(e) === key || (key in this.keys && PressedKey(e) === this.keys[key])
+		return this.PressedKey(e) === key || (key in this.keys && this.PressedKey(e) === this.keys[key])
 	}
 }
 

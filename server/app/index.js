@@ -1,5 +1,5 @@
 'use strict'
-import Service from '../../core/services/Service'
+import {instance as Log} from './services/Log'
 import {instance as Enum} from '../../core/enums'
 import {Response} from './response/Response'
 import Database from './database/db'
@@ -9,10 +9,9 @@ import {ErrorExtended as Error} from './response/Error'
 import Server from './server'
 import {instance as Crypto} from './crypto'
 
-let server = new Server(8080),
+let server = new Server(443),
 	path = require('path'),
 	credentials = require('./credentials.json'),
-	Log = Service.Log(),
 	html = require('./index.html')
 
 class App {
@@ -42,11 +41,17 @@ class App {
 		})
 
 		server.Route('/api/hash/create/:url', (request, response) => {
-			let hash = Crypto.TimestampHash(request.params.url)
+			let url = request.params.url,
+				regex = url.match(/^(http|https|ftp):\/\//g)
+			if (!(!!regex && regex.length)) {
+				url = 'http://' + url
+			}
 
-			this.db.Links.Create(request.params.url, hash)
+			let hash = Crypto.TimestampHash(url)
+
+			this.db.Links.Create(url, hash)
 				.then(result => {
-					Response.Ok(response, Messages.Link(hash, request.params.url))
+					Response.Ok(response, Messages.Link(hash, url))
 				})
 				.catch(error => {
 					console.log(error)
@@ -62,7 +67,7 @@ class App {
 			this.db.Links.Get(request.params.hash)
 				.then(result => {
 					if (result !== null) {
-						let link = result.get('link')
+						let link = result.get('link')	//https://localhost:1111/59USV
 
 						if (!!link) {
 							this.db.Users.Add(request.params.hash, request.headers['user-agent'])
@@ -79,7 +84,7 @@ class App {
 				})
 				.catch(error => {
 					console.log(error)
-					Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+					response.redirect('/?error=GENERIC_ERROR')
 				})
 		})
 

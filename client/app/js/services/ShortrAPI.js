@@ -10,17 +10,23 @@ export default class ShortrAPI {
 		return this._resolve(`/api/hash/get/${hash}`)
 	}
 
-	_resolve(url) {
-		return fetch(url)
-			.then(response => {
-				if (response.status === 200) {
-					resolve(response.json())
-				} else {
-					reject(response.json())
-				}
-			})
-			.catch(error => {
-				reject({status: 500, data: {}})
-			})
+	static _resolve(url) {
+		return new Promise((resolve, reject) => {
+			fetch(url)
+				.then(response => {
+					if (response.status === 200) {
+						response.json()
+							.then(json => resolve(json.data))
+							.catch(error => reject())
+					} else {
+						response.json()
+							.then(json => resolve(json.data))
+							.catch(error => reject())
+					}
+				})
+				.catch(error => {
+					reject({status: 500, data: {}})
+				})
+		})
 	}
 }
