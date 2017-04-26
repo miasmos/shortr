@@ -30,6 +30,11 @@ module.exports = {
     path: __dirname + '/dist',
     filename: "index.compiled.js"
   },
+  target: 'node',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
   module: {
     loaders: [
       {
@@ -72,6 +77,6 @@ module.exports = {
               }
           }
       }
-    }),
+    })
   ]
 };

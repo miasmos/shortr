@@ -24,6 +24,10 @@ module.exports = {
     root: path.join(__dirname, 'node_modules')
   },
   target: 'node',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
   externals: [externals()],
   output: {
     path: __dirname + '/dist',

@@ -1,12 +1,22 @@
 {
-	"certificate": {
-		"key": "/etc/letsencrypt/live/shortr.li/privkey.pem",
-		"cert": "/etc/letsencrypt/live/shortr.li/cert.pem"
+	"development": {
+		"certificate": {
+			"key": "../app/cert/privkey.pem",
+			"cert": "../app/cert/cert.pem"
+		},
+		"host": "localhost",
+		"protocol": "https",
+		"https": 3000,
+		"http": 3001
 	},
-	"localCertificate": {
-		"key": "A:\\http\\htdocs\\shortr.li\\server\\app\\cert\\privkey.pem",
-		"cert": "A:\\http\\htdocs\\shortr.li\\server\\app\\cert\\cert.pem"
-	},
-	"host": "shortr.li",
-	"protocol": "https"
+	"production": {
+		"certificate": {
+			"key": "/etc/letsencrypt/live/shortr.li/privkey.pem",
+			"cert": "/etc/letsencrypt/live/shortr.li/cert.pem"
+		},
+		"host": "shortr.li",
+		"protocol": "https",
+		"https": 443,
+		"http": 80
+	}
 }

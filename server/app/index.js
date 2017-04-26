@@ -9,7 +9,7 @@ import {ErrorExtended as Error} from './response/Error'
 import Server from './server'
 import {instance as Crypto} from './crypto'
 
-let server = new Server(443),
+let server = new Server(),
 	path = require('path'),
 	credentials = require('./credentials.json'),
 	html = require('./index.html')

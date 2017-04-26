@@ -42,14 +42,14 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
-/***/ }),
+/***/ },
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -79,10 +79,10 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var server = new _server2.default(443),
-	    path = __webpack_require__(25),
-	    credentials = __webpack_require__(26),
-	    html = __webpack_require__(27);
+	var server = new _server2.default(),
+	    path = __webpack_require__(20),
+	    credentials = __webpack_require__(25),
+	    html = __webpack_require__(26);
 
 	var App = function App() {
 		var _this = this;
@@ -167,9 +167,9 @@
 
 	var app = new App();
 
-/***/ }),
+/***/ },
 /* 2 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -223,9 +223,9 @@
 
 	var instance = exports.instance = new Log();
 
-/***/ }),
+/***/ },
 /* 3 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	"use strict";
 
@@ -269,9 +269,9 @@
 
 	var instance = exports.instance = new Enums();
 
-/***/ }),
+/***/ },
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -322,9 +322,9 @@
 		return Response;
 	}();
 
-/***/ }),
+/***/ },
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -397,9 +397,9 @@
 
 	exports.default = Database;
 
-/***/ }),
+/***/ },
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -467,15 +467,15 @@
 
 	exports.default = Models;
 
-/***/ }),
+/***/ },
 /* 7 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = require("sequelize");
 
-/***/ }),
+/***/ },
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -555,9 +555,9 @@
 
 	exports.default = Links;
 
-/***/ }),
+/***/ },
 /* 9 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	"use strict";
 
@@ -575,9 +575,9 @@
 
 	exports.default = Table;
 
-/***/ }),
+/***/ },
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -625,9 +625,9 @@
 
 	exports.default = Users;
 
-/***/ }),
+/***/ },
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -736,9 +736,9 @@
 
 	var instance = exports.instance = new Params();
 
-/***/ }),
+/***/ },
 /* 12 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -767,15 +767,15 @@
 		return ErrorExtended;
 	}(Error);
 
-/***/ }),
+/***/ },
 /* 13 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = require("validator");
 
-/***/ }),
+/***/ },
 /* 14 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	"use strict";
 
@@ -805,9 +805,9 @@
 		return Messages;
 	}();
 
-/***/ }),
+/***/ },
 /* 15 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -828,16 +828,17 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var express = __webpack_require__(16),
-	    https = __webpack_require__(18),
-	    http = __webpack_require__(19),
-	    fs = __webpack_require__(20),
+	    https = __webpack_require__(17),
+	    http = __webpack_require__(18),
+	    fs = __webpack_require__(19),
+	    path = __webpack_require__(20),
 	    config = __webpack_require__(21);
 
 	var Server = function () {
-		function Server(port) {
+		function Server() {
 			_classCallCheck(this, Server);
 
-			this.port = port;
+			this.config = process.env.NODE_ENV === 'production' ? config.production : config.development;
 
 			var app = express();
 			app.set('json spaces', 4);
@@ -862,13 +863,19 @@
 			value: function Start() {
 				var _this = this;
 
-				var server = https.createServer({
-					key: fs.readFileSync(config.certificate.key, 'utf8'),
-					cert: fs.readFileSync(config.certificate.cert, 'utf8')
-				}, this.app);
+				var cert = {};
+				if (process.env.NODE_ENV === 'production') {
+					cert.key = fs.readFileSync(this.config.certificate.key, 'utf8');
+					cert.cert = fs.readFileSync(this.config.certificate.cert, 'utf8');
+				} else {
+					console.log(__dirname);
+					cert.key = fs.readFileSync(path.join(__dirname, this.config.certificate.key), 'utf8');
+					cert.cert = fs.readFileSync(path.join(__dirname, this.config.certificate.cert), 'utf8');
+				}
+				var server = https.createServer(cert, this.app);
 
-				server.listen(this.port, function () {
-					_Log.instance.Say('Server listening on port ' + _this.port);
+				server.listen(this.config.https, function () {
+					_Log.instance.Say('Server listening on port ' + _this.config.https);
 				});
 
 				this.server = server;
@@ -876,7 +883,7 @@
 				var httpServer = http.createServer(function (request, response) {
 					response.writeHead(301, { "Location": "https://" + request.headers['host'] + request.url });
 					response.end();
-				}).listen(80);
+				}).listen(this.config.http);
 			}
 		}, {
 			key: 'App',
@@ -895,51 +902,66 @@
 
 	exports.default = Server;
 
-/***/ }),
+/***/ },
 /* 16 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = require("express");
 
-/***/ }),
-/* 17 */,
-/* 18 */
-/***/ (function(module, exports) {
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
 
 	module.exports = require("https");
 
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
 
 	module.exports = require("http");
 
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
 
 	module.exports = require("fs");
 
-/***/ }),
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	module.exports = require("path");
+
+/***/ },
 /* 21 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = {
-		"certificate": {
-			"key": "/etc/letsencrypt/live/shortr.li/privkey.pem",
-			"cert": "/etc/letsencrypt/live/shortr.li/cert.pem"
+		"development": {
+			"certificate": {
+				"key": "../app/cert/privkey.pem",
+				"cert": "../app/cert/cert.pem"
+			},
+			"host": "localhost",
+			"protocol": "https",
+			"https": 3000,
+			"http": 3001
 		},
-		"localCertificate": {
-			"key": "A:\\http\\htdocs\\shortr.li\\server\\app\\cert\\privkey.pem",
-			"cert": "A:\\http\\htdocs\\shortr.li\\server\\app\\cert\\cert.pem"
-		},
-		"host": "shortr.li",
-		"protocol": "https"
+		"production": {
+			"certificate": {
+				"key": "/etc/letsencrypt/live/shortr.li/privkey.pem",
+				"cert": "/etc/letsencrypt/live/shortr.li/cert.pem"
+			},
+			"host": "shortr.li",
+			"protocol": "https",
+			"https": 443,
+			"http": 80
+		}
 	};
 
-/***/ }),
+/***/ },
 /* 22 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -973,43 +995,37 @@
 
 	var instance = exports.instance = new Crypto();
 
-/***/ }),
+/***/ },
 /* 23 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = require("bluebird");
 
-/***/ }),
+/***/ },
 /* 24 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = require("shorthash");
 
-/***/ }),
+/***/ },
 /* 25 */
-/***/ (function(module, exports) {
-
-	module.exports = require("path");
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 	module.exports = {
 		"database": {
-			"user": "postgres",
-			"password": "B=jfCHn?akpHC7ymqQL5LhqVc2@F9dRb",
-			"database": "shortr",
-			"host": "localhost",
+			"user": "shortr.li",
+			"password": "3g7hfbjevm3mms2e383d",
+			"database": "shortr.li",
+			"host": "127.0.0.1",
 			"port": 5432
 		}
 	};
 
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
 
-	module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n\t<meta charset=\"UTF-8\">\r\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">\r\n\t<meta name=\"description\" content=\"Shortr is a premium link shortening service focusing on ease of use.\">\r\n\t<link href=\"https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed\" rel=\"stylesheet\">\r\n\t<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/static/images/apple-touch-icon.png\">\r\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/static/images/favicon-32x32.png\">\r\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/static/images/favicon-16x16.png\">\r\n\t<link rel=\"manifest\" href=\"/static/images/manifest.json\">\r\n\t<link rel=\"mask-icon\" href=\"/static/images/safari-pinned-tab.svg\" color=\"#5bbad5\">\r\n\t<link rel=\"shortcut icon\" href=\"/static/images/favicon.ico\">\r\n\t<meta name=\"msapplication-config\" content=\"/static/images/browserconfig.xml\">\r\n\t<meta name=\"theme-color\" content=\"#ffffff\">\r\n\t<title>Shortr | Shorten your links. Easily.</title>\r\n\t<style>\r\n\t\tbody {width: 100%; height: 100%; overflow: hidden;}\r\n\t\thtml,body,canvas {padding: 0; margin: 0;}\r\n\t</style>\r\n\t<div id=\"app\"></div>\r\n</head>\r\n<body>\r\n<script type=\"text/javascript\" src=\"static/js/index.compiled.js\"></script></body>\r\n</html>";
+	module.exports = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">\n\t<meta name=\"description\" content=\"Shortr is a premium link shortening service focusing on ease of use.\">\n\t<link href=\"https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed\" rel=\"stylesheet\">\n\t<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/static/images/apple-touch-icon.png\">\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/static/images/favicon-32x32.png\">\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/static/images/favicon-16x16.png\">\n\t<link rel=\"manifest\" href=\"/static/images/manifest.json\">\n\t<link rel=\"mask-icon\" href=\"/static/images/safari-pinned-tab.svg\" color=\"#5bbad5\">\n\t<link rel=\"shortcut icon\" href=\"/static/images/favicon.ico\">\n\t<meta name=\"msapplication-config\" content=\"/static/images/browserconfig.xml\">\n\t<meta name=\"theme-color\" content=\"#ffffff\">\n\t<title>Shortr | Shorten your links. Easily.</title>\n\t<style>\n\t\tbody {width: 100%; height: 100%; overflow: hidden;}\n\t\thtml,body,canvas {padding: 0; margin: 0;}\n\t</style>\n\t<div id=\"app\"></div>\n</head>\n<body>\n<script type=\"text/javascript\" src=\"static/js/index.compiled.js\"></script></body>\n</html>";
 
-/***/ })
+/***/ }
 /******/ ]);

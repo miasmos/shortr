@@ -8,11 +8,12 @@ var express = require('express'),
 	https = require('https'),
 	http = require('http'),
 	fs = require('fs'),
+	path = require('path'),
 	config = require('./config.json')
 
 export default class Server {
-	constructor(port) {
-		this.port = port
+	constructor() {
+		this.config = process.env.NODE_ENV === 'production' ? config.production : config.development
 
 		let app = express()
 		app.set('json spaces', 4)
@@ -33,13 +34,19 @@ export default class Server {
 	}
 
 	Start() {
-		let server = https.createServer({
-			key: fs.readFileSync(config.certificate.key, 'utf8'),
-			cert: fs.readFileSync(config.certificate.cert, 'utf8')
-		}, this.app)
+		let cert = {}
+		if (process.env.NODE_ENV === 'production') {
+			cert.key = fs.readFileSync(this.config.certificate.key, 'utf8')
+			cert.cert = fs.readFileSync(this.config.certificate.cert, 'utf8')
+		} else {
+			console.log(__dirname)
+			cert.key = fs.readFileSync(path.join(__dirname, this.config.certificate.key), 'utf8')
+			cert.cert = fs.readFileSync(path.join(__dirname, this.config.certificate.cert), 'utf8')
+		}
+		let server = https.createServer(cert, this.app)
 
-		server.listen(this.port, () => {
-			Log.Say(`Server listening on port ${this.port}`)
+		server.listen(this.config.https, () => {
+			Log.Say(`Server listening on port ${this.config.https}`)
 		})
 
 		this.server = server
@@ -47,7 +54,7 @@ export default class Server {
 		let httpServer = http.createServer((request, response) => {
 			response.writeHead(301, {"Location": "https://" + request.headers['host'] + request.url})
 			response.end()
-		}).listen(80)
+		}).listen(this.config.http)
 	}
 
 	App() {
