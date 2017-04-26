@@ -828,7 +828,6 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var express = __webpack_require__(16),
-	    exphbs = __webpack_require__(17),
 	    https = __webpack_require__(18),
 	    http = __webpack_require__(19),
 	    fs = __webpack_require__(20),
@@ -842,8 +841,6 @@
 
 			var app = express();
 			app.set('json spaces', 4);
-			app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-			app.set('view engine', 'handlebars');
 			app.use(function (request, response, next) {
 				var host = request.headers.host.replace(/(.*):([0-9]+)/g, "$1");
 				if (['localhost', '127.0.0.1', 'shortr.li', 'www.shortr.li'].indexOf(host) === -1) {
@@ -905,12 +902,7 @@
 	module.exports = require("express");
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-	module.exports = require("express-handlebars");
-
-/***/ }),
+/* 17 */,
 /* 18 */
 /***/ (function(module, exports) {
 

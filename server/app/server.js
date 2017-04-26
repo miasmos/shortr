@@ -5,7 +5,6 @@ import {Response} from './response/Response'
 import {instance as Log} from './services/Log'
 
 var express = require('express'),
-	exphbs = require('express-handlebars'),
 	https = require('https'),
 	http = require('http'),
 	fs = require('fs'),
@@ -17,8 +16,6 @@ export default class Server {
 
 		let app = express()
 		app.set('json spaces', 4)
-		app.engine('handlebars', exphbs({defaultLayout: 'main'}))
-		app.set('view engine', 'handlebars')
 		app.use((request, response, next) => {
 			let host = request.headers.host.replace(/(.*):([0-9]+)/g, "$1")
 			if (['localhost', '127.0.0.1', 'shortr.li', 'www.shortr.li'].indexOf(host) === -1) {
