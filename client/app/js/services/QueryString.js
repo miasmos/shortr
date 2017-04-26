@@ -19,6 +19,7 @@ class QueryString {
 				return Enum.error.message[value]
 			}
 		}
+		return false
 	}
 }
 
