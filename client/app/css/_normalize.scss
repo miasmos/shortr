@@ -314,6 +314,10 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
+button:focus {
+  outline: 0;
+}
+
 /**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.

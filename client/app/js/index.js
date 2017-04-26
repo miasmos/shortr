@@ -46,7 +46,7 @@ class App extends React.Component {
 							</div>
 						}
 						{this.state.error &&
-							<Message text={this.state.error} />
+							<Message text={this.state.error} clearMessage={this.ClearMessage.bind(this)} />
 						}
 					</div>
 				</div>
@@ -72,6 +72,13 @@ class App extends React.Component {
 		this.setState({
 			...this.state,
 			submitted: true
+		})
+	}
+
+	ClearMessage() {
+		this.setState({
+			...this.state,
+			error: false
 		})
 	}
 }

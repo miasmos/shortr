@@ -15,6 +15,10 @@ ul,li,div,p,h1,h2,h3,h4,h5,h6 {padding: 0; margin: 0;}
 :-moz-placeholder { /* Firefox 18- */
   color: $borderColor;
 }
+a {
+	color: $borderColor;
+	text-decoration: none;
+}
 
 html {min-height: 100%;}
 
@@ -111,7 +115,7 @@ body {
 			display: inline-block;
 			background-color: red;
 			opacity: 0;
-			transition: opacity 0.7s;
+			// transition: opacity 0.7s;
 		}
 
 		.input-wrapper .input-background.show {
@@ -173,10 +177,27 @@ body {
 		min-width: 530px;
 		margin-top: 40px;
 
-		p {
+		.text {
 			font-size: 30pt;
 			letter-spacing: -1px;
 			text-align: center;
+		}
+
+		.back {
+			text-align: center;
+		    color: white;
+		    height: 47px;
+		    margin-top: 80px;
+
+			span {
+				font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			    font-size: 11pt;
+			    text-transform: uppercase;
+			    display: inline-block;
+			    height: 100%;
+			    border: 3px solid #FFF;
+			    padding: 9px 23px;
+			}
 		}
 	}
 
@@ -249,9 +270,9 @@ body {
 		  right:1px;
 		  top:0px;
 		  height:1px;
-		  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(255,255,255,0.4) 100%); 
+		  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(255,255,255,0.4) 100%);
 		}
-		
+
 		.p1{
 			animation-name:p1;
 		  animation-duration: #{$interval*60 + $duration + 's'};
