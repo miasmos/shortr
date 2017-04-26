@@ -24,7 +24,7 @@ export default class ShortrAPI {
 							.catch(error => reject())
 					} else {
 						response.json()
-							.then(json => resolve(json.data))
+							.then(json => reject(json.data))
 							.catch(error => reject())
 					}
 				})

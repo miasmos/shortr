@@ -1,12 +1,7 @@
 var webpack = require('webpack'),
     path = require('path'),
     WebpackStripLoader = require('strip-loader'),
-    externals = require('webpack-node-externals'),
-    stripLoader = {
-     test: [/\.js$/, /\.es6$/],
-     exclude: /node_modules/,
-     loader: WebpackStripLoader.loader('console.log')
-    }
+    externals = require('webpack-node-externals')
 
 module.exports = {
   entry: [
@@ -17,9 +12,6 @@ module.exports = {
       joi: 'joi-browser'
     }
   },
-  loaders: [
-    stripLoader
-  ],
   resolveLoader: {
     root: path.join(__dirname, 'node_modules')
   },

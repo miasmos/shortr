@@ -4,13 +4,16 @@ var request = require('request-promise'),
 	credentials = require('../credentials.json')
 
 class Recaptcha {
+	constructor() {
+		this.private = process.env.NODE_ENV === 'production' ? credentials.production.recaptcha.private : credentials.development.recaptcha.private
+	}
 	Verify(token) {
 		return new Promise((resolve, reject) => {
 			request({
 				method: 'POST',
 				uri: 'https://www.google.com/recaptcha/api/siteverify',
 				form: {
-					secret: credentials.recaptcha.private,
+					secret: this.private,
 					response: token
 				}
 			})
