@@ -20,7 +20,10 @@ a {
 	text-decoration: none;
 }
 
-html {min-height: 100%;}
+html {
+	min-height: 100%;
+	overflow: hidden;
+}
 
 body {
 	min-height: 100%;
@@ -103,7 +106,7 @@ body {
 		text-align: center;
 
 		.input-wrapper {
-			width: 490px;
+			width: $inputWidth;
 			display: inline-block;
 			position: relative;
 			float: left;
@@ -393,5 +396,308 @@ body {
 		transition: 300ms;
 		transition-delay: 300ms;
 		transition-timing-function: ease-in;
+	}
+}
+
+@media(max-width: 768px) {
+	body {
+		font-size: 19pt;
+	}
+
+	#app {
+		#logo {
+			.slogan {
+				margin-top: 8px;
+			}
+		}
+
+		#footer {
+			height: 120px;
+			font-size: 14pt;
+		}
+	}
+}
+
+@media(max-width: 414px) {
+	body {
+		font-size: 11pt;
+	}
+
+	#app {
+		.user-interaction {
+			width: 335px;
+			margin-top: 33px;
+		}
+
+		#logo {
+			max-width: 229px;
+
+			.title-container {
+				width: 229px;
+				height: 60px;
+			}
+
+			.slogan {
+				margin-top: 6px;
+			}
+		}
+
+		#message {
+			min-width: 229px;
+
+			.text {
+				font-size: 24pt;
+			}
+		}
+
+		#termsprivacy {
+			min-width: 335px;
+
+			.terms, .privacy {
+				height: 244px;
+			}
+		}
+
+		#link {
+			.link {
+				font-size: 24pt;
+			}
+
+			.context {
+				top: 13px;
+			}
+		}
+
+		#inputbox {
+			$totalWidth: 335px;
+			$inputHeight: 60px;
+			$inputPaddingV: 10px;
+			$inputPaddingH: 20px;
+			$inputBorder: 3px;
+			$inputWidth: 250px;
+
+			height: $inputHeight;
+			width: $totalWidth;
+
+			.input-wrapper {
+				width: $inputWidth;
+			}
+
+			.input-wrapper .input-background {
+				width: #{$inputWidth - $inputPaddingH*2};
+				padding: 0 $inputPaddingH;
+				height: 3px;
+				position: absolute;
+				bottom: 12px;
+				left: $inputPaddingH;
+				z-index: 1;
+				display: inline-block;
+				background-color: red;
+				opacity: 0;
+			}
+
+			.input-wrapper input {
+				font-size: 22pt;
+				width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+				border: $inputBorder solid $borderColor;
+				padding: $inputPaddingV $inputPaddingH;
+				height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+			}
+
+			button {
+				font-size: 11pt;
+				height: #{$inputHeight};
+				border: $inputBorder solid $borderColor;
+				margin-left: 5px;
+				width: #{$totalWidth - $inputWidth - 5};
+				font-size: 10pt;
+			}
+		}
+
+		#footer {
+			height: 80px;
+			font-size: 9pt;
+		}
+	}
+}
+
+@media(max-width: 375px) {
+	h1,h3,h3,h4,h5,h6 {
+
+	}
+	#app {
+		.user-interaction {
+			width: 305px;
+		}
+
+		#termsprivacy {
+			min-width: 305px;
+			font-size: 10pt;
+			line-height: 14pt;
+
+			.terms-inner, .privacy-inner {
+				right: 0;
+			}
+		}
+
+		#link {
+			.link {
+				font-size: 20pt;
+			}
+
+			.context {
+				top: 10px;
+			}
+		}
+
+		#message {
+			min-width: 305px;
+
+			.text {
+				font-size: 20pt;
+			}
+		}
+
+
+		#inputbox {
+			$totalWidth: 305px;
+			$inputHeight: 60px;
+			$inputPaddingV: 10px;
+			$inputPaddingH: 20px;
+			$inputBorder: 3px;
+			$inputWidth: 230px;
+
+			height: $inputHeight;
+			width: $totalWidth;
+
+			.input-wrapper {
+				width: $inputWidth;
+			}
+
+			.input-wrapper .input-background {
+				width: #{$inputWidth - $inputPaddingH*2};
+				padding: 0 $inputPaddingH;
+				height: 3px;
+				position: absolute;
+				bottom: 12px;
+				left: $inputPaddingH;
+				z-index: 1;
+				display: inline-block;
+				background-color: red;
+				opacity: 0;
+			}
+
+			.input-wrapper input {
+				font-size: 22pt;
+				width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+				border: $inputBorder solid $borderColor;
+				padding: $inputPaddingV $inputPaddingH;
+				height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+			}
+
+			button {
+				font-size: 11pt;
+				height: #{$inputHeight};
+				border: $inputBorder solid $borderColor;
+				margin-left: 5px;
+				width: #{$totalWidth - $inputWidth - 5};
+				font-size: 10pt;
+			}
+		}
+	}
+}
+
+@media(max-width: 320px) {
+	#app {
+		.user-interaction {
+			width: 265px;
+		}
+
+		#termsprivacy {
+			min-width: 265px;
+
+			.terms, .privacy {
+				height: 172px;
+			}
+
+			.back {
+				margin-top: 40px;
+			}
+
+			.back span {
+				padding: 11px 23px;
+			}
+		}
+
+		#link {
+			.link {
+				font-size: 16pt;
+			}
+
+			.context {
+			    font-size: 7pt;
+			    top: 7px;
+			    right: -26px;
+			}
+		}
+
+		#message {
+			min-width: 265px;
+
+			.text {
+				font-size: 16pt;
+			}
+
+			.back {
+				margin-top: 70px;
+			}
+		}
+
+
+		#inputbox {
+			$totalWidth: 265px;
+			$inputHeight: 60px;
+			$inputPaddingV: 10px;
+			$inputPaddingH: 20px;
+			$inputBorder: 3px;
+			$inputWidth: 170px;
+
+			height: $inputHeight;
+			width: $totalWidth;
+
+			.input-wrapper {
+				width: $inputWidth;
+			}
+
+			.input-wrapper .input-background {
+				width: #{$inputWidth - $inputPaddingH*2};
+				padding: 0 $inputPaddingH;
+				height: 3px;
+				position: absolute;
+				bottom: 12px;
+				left: $inputPaddingH;
+				z-index: 1;
+				display: inline-block;
+				background-color: red;
+				opacity: 0;
+			}
+
+			.input-wrapper input {
+				font-size: 17pt;
+				width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+				border: $inputBorder solid $borderColor;
+				padding: $inputPaddingV $inputPaddingH;
+				height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+			}
+
+			button {
+				font-size: 11pt;
+				height: #{$inputHeight};
+				border: $inputBorder solid $borderColor;
+				margin-left: 5px;
+				width: #{$totalWidth - $inputWidth - 5};
+				font-size: 10pt;
+			}
+		}
 	}
 }

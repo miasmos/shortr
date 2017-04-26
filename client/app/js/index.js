@@ -52,7 +52,7 @@ class App extends React.Component {
 						{(this.state.terms || this.state.privacy) &&
 							<TermsPrivacy terms={this.state.terms} privacy={this.state.privacy} clearTermsPrivacy={this.ClearTermsPrivacy.bind(this)} />
 						}
-						{this.state.error &&
+						{!(this.state.terms || this.state.privacy) && this.state.error &&
 							<Message text={this.state.error} clearMessage={this.ClearMessage.bind(this)} />
 						}
 					</div>

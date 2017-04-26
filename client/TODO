@@ -1,3 +1,4 @@
 Set up workflow to copy static files from /client/app/images to /server/dist/static/images
 Analytics dashboard
 Rate limiting
+Tie shortened url requests to captcha tokens
