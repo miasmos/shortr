@@ -97,6 +97,10 @@
 
 	var _Message2 = _interopRequireDefault(_Message);
 
+	var _TermsPrivacy = __webpack_require__(331);
+
+	var _TermsPrivacy2 = _interopRequireDefault(_TermsPrivacy);
+
 	var _Stars = __webpack_require__(325);
 
 	var _Stars2 = _interopRequireDefault(_Stars);
@@ -128,7 +132,10 @@
 			_this.state = {
 				submitted: false,
 				hash: false,
-				error: _QueryString.instance.Error()
+				link: false,
+				error: _QueryString.instance.Error(),
+				terms: false,
+				privacy: false
 			};
 			return _this;
 		}
@@ -146,13 +153,13 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'user-interaction' },
-							!this.state.error && _react2.default.createElement(
+							!this.state.error && !(this.state.terms || this.state.privacy) && _react2.default.createElement(
 								'div',
 								null,
 								_react2.default.createElement(
 									_reactAddonsCssTransitionGroup2.default,
 									{ transitionName: 'inputbox', transitionEnterTimeout: 300, transitionLeaveTimeout: 300 },
-									!this.state.submitted && _react2.default.createElement(_InputBox2.default, { requestLinkCreation: this.CreateLink.bind(this) })
+									!this.state.submitted && _react2.default.createElement(_InputBox2.default, { requestLinkCreation: this.CreateLink.bind(this), verifyCaptcha: this.VerifyCaptcha.bind(this), setLink: this.SetLink.bind(this) })
 								),
 								_react2.default.createElement(
 									_reactAddonsCssTransitionGroup2.default,
@@ -160,11 +167,12 @@
 									this.state.submitted && !!this.state.hash && _react2.default.createElement(_LinkDisplay2.default, { hash: this.state.hash, hide: !this.state.submitted })
 								)
 							),
+							(this.state.terms || this.state.privacy) && _react2.default.createElement(_TermsPrivacy2.default, { terms: this.state.terms, privacy: this.state.privacy, clearTermsPrivacy: this.ClearTermsPrivacy.bind(this) }),
 							this.state.error && _react2.default.createElement(_Message2.default, { text: this.state.error, clearMessage: this.ClearMessage.bind(this) })
 						)
 					),
 					_react2.default.createElement(_Stars2.default, null),
-					_react2.default.createElement(_Footer2.default, null)
+					_react2.default.createElement(_Footer2.default, { showTerms: this.ShowTerms.bind(this), showPrivacy: this.ShowPrivacy.bind(this) })
 				);
 			}
 		}, {
@@ -176,7 +184,6 @@
 					_this2.setState(_extends({}, _this2.state, {
 						hash: response.hash
 					}));
-					console.log(response);
 				}).catch(function (error) {
 					console.error(error);
 				});
@@ -186,10 +193,54 @@
 				}));
 			}
 		}, {
+			key: 'VerifyCaptcha',
+			value: function VerifyCaptcha(token) {
+				var _this3 = this;
+
+				_ShortrAPI2.default.VerifyCaptcha(token).then(function (response) {
+					if (response.success && _this3.state.link) {
+						_this3.CreateLink(_this3.state.link);
+					}
+				}).catch(function (error) {
+					console.error(error);
+				});
+			}
+		}, {
+			key: 'SetLink',
+			value: function SetLink(link) {
+				this.setState(_extends({}, this.state, {
+					link: link
+				}));
+			}
+		}, {
 			key: 'ClearMessage',
 			value: function ClearMessage() {
 				this.setState(_extends({}, this.state, {
 					error: false
+				}));
+			}
+		}, {
+			key: 'ClearTermsPrivacy',
+			value: function ClearTermsPrivacy() {
+				this.setState(_extends({}, this.state, {
+					terms: false,
+					privacy: false
+				}));
+			}
+		}, {
+			key: 'ShowTerms',
+			value: function ShowTerms() {
+				this.setState(_extends({}, this.state, {
+					terms: true,
+					privacy: false
+				}));
+			}
+		}, {
+			key: 'ShowPrivacy',
+			value: function ShowPrivacy() {
+				this.setState(_extends({}, this.state, {
+					privacy: true,
+					terms: false
 				}));
 			}
 		}]);
@@ -681,11 +732,13 @@
 				"NOT_FOUND": "Whoops. That page doesn't exist.",
 				"INVALID_PARAM_HASH": "Invalid hash supplied.",
 				"INVALID_PARAM_URL": "Invalid URL supplied.",
+				"INVALID_PARAM_RECAPTCHA_TOKEN": "Invalid recaptcha token supplied.",
 				"RATE_LIMITED": "Your request was rate limited. Try again later.",
 				"GENERIC_ERROR": "An undiagnosed error has occurred.",
 				"CORS": "This resource is restricted to the shortr.li domain.",
 				"NO_RESULTS": "The request was made, but returned no results.",
-				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond."
+				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond.",
+				"RECAPTCHA_FAILED": "The request has failed a recaptcha challenge. Are you a robot?"
 			},
 			code: {
 				"OK": 200,
@@ -1350,6 +1403,11 @@
 			key: 'GetLink',
 			value: function GetLink(hash) {
 				return this._resolve('/api/hash/get/' + hash);
+			}
+		}, {
+			key: 'VerifyCaptcha',
+			value: function VerifyCaptcha(token) {
+				return this._resolve('/api/captcha/verify/' + token);
 			}
 		}, {
 			key: '_resolve',
@@ -31570,7 +31628,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var validator = __webpack_require__(249);
+	var validator = __webpack_require__(249),
+	    config = __webpack_require__(323);
 
 	var InputBox = function (_React$Component) {
 		_inherits(InputBox, _React$Component);
@@ -31589,6 +31648,7 @@
 			};
 
 			_this.typingTimeout = undefined;
+			window.captchaCallback = _this.CaptchaCallback.bind(_this);
 			return _this;
 		}
 
@@ -31600,33 +31660,45 @@
 					'div',
 					{ id: 'inputbox' },
 					_react2.default.createElement(
-						'div',
-						{ className: 'input-wrapper' },
-						_react2.default.createElement('input', { type: 'text',
-							ref: 'input',
-							placeholder: 'supercalifragilisticexpialidocious.com',
-							value: this.state.link,
-							onChange: this.OnLinkChange.bind(this),
-							onKeyDown: this.OnInputKeyDown.bind(this),
-							autoComplete: 'off', autoCorrect: 'off', autoCapitalize: 'off', spellCheck: 'false'
-						}),
-						_react2.default.createElement('div', { className: 'input-background ' + (linkIsInvalid ? 'show' : '')
-						})
-					),
-					_react2.default.createElement(
-						'button',
-						{ type: 'button',
-							onClick: this.OnSubmit.bind(this),
-							style: this.state.buttonCSS,
-							disabled: this.state.linkValid ? '' : 'disabled',
-							className: this.state.linkValid ? '' : 'disabled',
-							onMouseDown: this.OnButtonMouseDown.bind(this),
-							onMouseUp: this.OnButtonMouseUp.bind(this),
-							onMouseLeave: this.OnButtonMouseLeave.bind(this)
-						},
-						'Shorten'
+						'form',
+						null,
+						_react2.default.createElement(
+							'div',
+							{ className: 'input-wrapper' },
+							_react2.default.createElement('input', { type: 'text',
+								ref: 'input',
+								placeholder: 'supercalifragilisticexpialidocious.com',
+								value: this.state.link,
+								onChange: this.OnLinkChange.bind(this),
+								onKeyDown: this.OnInputKeyDown.bind(this),
+								autoComplete: 'off', autoCorrect: 'off', autoCapitalize: 'off', spellCheck: 'false'
+							}),
+							_react2.default.createElement('div', { className: 'input-background ' + (linkIsInvalid ? 'show' : '')
+							})
+						),
+						_react2.default.createElement(
+							'button',
+							{ type: 'button',
+								onClick: this.OnSubmit.bind(this),
+								style: this.state.buttonCSS,
+								disabled: this.state.linkValid ? '' : 'disabled',
+								className: 'g-recaptcha ' + (this.state.linkValid ? '' : 'disabled'),
+								'data-sitekey': config.recaptcha.public,
+								'data-theme': 'dark',
+								'data-callback': 'captchaCallback',
+								onMouseDown: this.OnButtonMouseDown.bind(this),
+								onMouseUp: this.OnButtonMouseUp.bind(this),
+								onMouseLeave: this.OnButtonMouseLeave.bind(this)
+							},
+							'Shorten'
+						)
 					)
 				);
+			}
+		}, {
+			key: 'CaptchaCallback',
+			value: function CaptchaCallback(token) {
+				this.props.verifyCaptcha(token);
 			}
 		}, {
 			key: 'componentDidMount',
@@ -31695,7 +31767,7 @@
 				if (this.state.submitted) {
 					return;
 				}
-				this.props.requestLinkCreation(this.state.link);
+				this.props.setLink(this.state.link);
 				this.refs.input.blur();
 
 				this.setState(_extends({}, this.state, {
@@ -35709,7 +35781,11 @@
 
 	module.exports = {
 		"url": "shortr.li",
-		"port": "8080"
+		"twitterHandle": "shortr_canada",
+		"port": "8080",
+		"recaptcha": {
+			"public": "6Lfo0x4UAAAAAFa6hpbaSehNjuDqM0HH0X0mO501"
+		}
 	};
 
 /***/ }),
@@ -35866,11 +35942,13 @@
 /* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -35886,29 +35964,115 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var config = __webpack_require__(323);
+
 	var Footer = function (_React$Component) {
 		_inherits(Footer, _React$Component);
 
 		function Footer() {
 			_classCallCheck(this, Footer);
 
-			return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this));
+
+			_this.state = {
+				TermsCSS: {},
+				PrivacyCSS: {},
+				ContactCSS: {}
+			};
+			return _this;
 		}
 
 		_createClass(Footer, [{
-			key: "render",
+			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					"div",
-					{ id: "footer" },
+					'div',
+					{ id: 'footer' },
 					_react2.default.createElement(
-						"div",
+						'ul',
 						null,
-						"Copyright \xA9 ",
-						new Date().getFullYear(),
-						" Stephen Poole"
+						_react2.default.createElement(
+							'li',
+							{ className: 'link', style: this.state.TermsCSS,
+								onMouseDown: this.AddCSS.bind(this, 'Terms'),
+								onMouseUp: this.ClearCSS.bind(this, 'Terms'),
+								onMouseLeave: this.ClearCSS.bind(this, 'Terms'),
+								onClick: this.props.showTerms },
+							'Terms'
+						),
+						_react2.default.createElement('li', { className: 'divider' }),
+						_react2.default.createElement(
+							'li',
+							{ className: 'link', style: this.state.PrivacyCSS,
+								onMouseDown: this.AddCSS.bind(this, 'Privacy'),
+								onMouseUp: this.ClearCSS.bind(this, 'Privacy'),
+								onMouseLeave: this.ClearCSS.bind(this, 'Privacy'),
+								onClick: this.props.showPrivacy },
+							'Privacy'
+						),
+						_react2.default.createElement('li', { className: 'divider' }),
+						_react2.default.createElement(
+							'li',
+							{ className: 'link', style: this.state.ContactCSS,
+								onMouseDown: this.AddCSS.bind(this, 'Contact'),
+								onMouseUp: this.ClearCSS.bind(this, 'Contact'),
+								onMouseLeave: this.ClearCSS.bind(this, 'Contact') },
+							_react2.default.createElement(
+								'a',
+								{ href: 'https://twitter.com/intent/tweet?text=@' + config.twitterHandle + ' ' },
+								'Contact'
+							)
+						)
 					)
 				);
+			}
+		}, {
+			key: 'AddCSS',
+			value: function AddCSS(type) {
+				switch (type) {
+					case 'Terms':
+						this.setState(_extends({}, this.state, {
+							TermsCSS: {
+								transform: 'translate(1px, 1px)'
+							}
+						}));
+						break;
+					case 'Privacy':
+						this.setState(_extends({}, this.state, {
+							PrivacyCSS: {
+								transform: 'translate(1px, 1px)'
+							}
+						}));
+						break;
+					case 'Contact':
+						this.setState(_extends({}, this.state, {
+							ContactCSS: {
+								transform: 'translate(1px, 1px)'
+							}
+						}));
+						break;
+				}
+			}
+		}, {
+			key: 'ClearCSS',
+			value: function ClearCSS(type) {
+				switch (type) {
+					case 'Terms':
+						this.setState(_extends({}, this.state, {
+							TermsCSS: {}
+						}));
+						break;
+					case 'Privacy':
+						this.setState(_extends({}, this.state, {
+							PrivacyCSS: {}
+						}));
+						break;
+					case 'Contact':
+						this.setState(_extends({}, this.state, {
+							ContactCSS: {}
+						}));
+						break;
+				}
 			}
 		}]);
 
@@ -35952,7 +36116,7 @@
 
 
 	// module
-	exports.push([module.id, "/*! normalize.scss v0.1.0 | MIT License | based on git.io/normalize */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio, canvas, progress, video {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n[hidden], template {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\na:active, a:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb, strong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton, input, optgroup, select, textarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton, select {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton, html input[type=\"button\"], input[type=\"reset\"], input[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled], html input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner, input::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\nbutton:focus {\n  outline: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button, input[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  /* 2 */\n  box-sizing: content-box; }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button, input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd, th {\n  padding: 0; }\n\n/* ----------------------------------------------------------------------------------------------------\nSuper Form Reset\nA couple of things to watch out for:\n- IE8: If a text input doesn't have padding on all sides or none the text won't be centered.\n- The default border sizes on text inputs in all UAs seem to be slightly different. You're better off using custom borders.\n- You NEED to set the font-size and family on all form elements\n- Search inputs need to have their appearance reset and the box-sizing set to content-box to match other UAs\n- You can style the upload button in webkit using ::-webkit-file-upload-button\n- ::-webkit-file-upload-button selectors can't be used in the same selector as normal ones. FF and IE freak out.\n- IE: You don't need to fake inline-block with labels and form controls in IE. They function as inline-block.\n- By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs\n----------------------------------------------------------------------------------------------------*/\ninput, label, select, button, textarea {\n  margin: 0;\n  border: 0;\n  padding: 0;\n  display: inline-block;\n  vertical-align: middle;\n  white-space: normal;\n  background: none;\n  line-height: 1;\n  /* Browsers have different default form fonts */\n  font-size: 13px;\n  font-family: Arial; }\n\n/* Remove the stupid outer glow in Webkit */\ninput:focus {\n  outline: 0; }\n\n/* Box Sizing Reset\n-----------------------------------------------*/\n/* All of our custom controls should be what we expect them to be */\ninput, textarea {\n  box-sizing: content-box; }\n\n/* These elements are usually rendered a certain way by the browser */\nbutton, input[type=reset], input[type=button], input[type=submit], input[type=checkbox], input[type=radio], select {\n  box-sizing: border-box; }\n\n/* Text Inputs\n-----------------------------------------------*/\n/* Button Controls\n-----------------------------------------------*/\ninput[type=checkbox], input[type=radio] {\n  width: 13px;\n  height: 13px; }\n\n/* File Uploads\n-----------------------------------------------*/\n/* Search Input\n-----------------------------------------------*/\n/* Make webkit render the search input like a normal text field */\ninput[type=search] {\n  -webkit-appearance: textfield;\n  -webkit-box-sizing: content-box; }\n\n/* Turn off the recent search for webkit. It adds about 15px padding on the left */\n::-webkit-search-decoration {\n  display: none; }\n\n/* Buttons\n-----------------------------------------------*/\nbutton, input[type=\"reset\"], input[type=\"button\"], input[type=\"submit\"] {\n  /* Fix IE7 display bug */\n  overflow: visible;\n  width: auto; }\n\n/* IE8 and FF freak out if this rule is within another selector */\n::-webkit-file-upload-button {\n  padding: 0;\n  border: 0;\n  background: none; }\n\n/* Textarea\n-----------------------------------------------*/\ntextarea {\n  /* Move the label to the top */\n  vertical-align: top;\n  /* Turn off scroll bars in IE unless needed */\n  overflow: auto; }\n\n/* Selects\n-----------------------------------------------*/\nselect[multiple] {\n  /* Move the label to the top */\n  vertical-align: top; }\n\nul, li, div, p, h1, h2, h3, h4, h5, h6 {\n  padding: 0;\n  margin: 0; }\n\n* {\n  box-sizing: border-box; }\n\n::-webkit-input-placeholder {\n  color: #FFF; }\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  color: #FFF; }\n\n:-ms-input-placeholder {\n  /* IE 10+ */\n  color: #FFF; }\n\n:-moz-placeholder {\n  /* Firefox 18- */\n  color: #FFF; }\n\na {\n  color: #FFF;\n  text-decoration: none; }\n\nhtml {\n  min-height: 100%; }\n\nbody {\n  min-height: 100%;\n  height: 100%;\n  top: 0;\n  position: absolute;\n  overflow: hidden;\n  font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n  background-color: #020202;\n  color: #FFF;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: subpixel-antialiased;\n  text-shadow: 0 0 2px transparent;\n  font-size: 12pt; }\n\n#app {\n  width: 100%;\n  height: 100%; }\n  #app .wrapper {\n    background: url(\"/static/images/logo-background.jpg\") no-repeat center center fixed;\n    background-size: cover;\n    width: inherit;\n    height: inherit; }\n  #app .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    z-index: 2; }\n  #app .user-interaction {\n    min-height: 80px;\n    margin-top: 50px;\n    width: 675px; }\n  #app #logo {\n    max-width: 409px;\n    margin: 0 auto; }\n    #app #logo a {\n      width: 100%;\n      height: 100%;\n      display: block;\n      cursor: pointer; }\n    #app #logo .title-container {\n      position: relative;\n      width: 409px;\n      height: 114px; }\n    #app #logo .slogan {\n      text-align: center;\n      pointer-events: none; }\n  #app #inputbox {\n    position: relative;\n    height: 80px;\n    width: 675px;\n    display: block;\n    text-align: center; }\n    #app #inputbox .input-wrapper {\n      width: 490px;\n      display: inline-block;\n      position: relative; }\n    #app #inputbox .input-wrapper .input-background {\n      width: 450px;\n      padding: 0 20px;\n      height: 3px;\n      position: absolute;\n      bottom: 12px;\n      left: 20px;\n      z-index: 1;\n      display: inline-block;\n      background-color: red;\n      opacity: 0; }\n    #app #inputbox .input-wrapper .input-background.show {\n      opacity: 1; }\n    #app #inputbox .input-wrapper input {\n      font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n      width: 444px;\n      border: 3px solid #FFF;\n      padding: 10px 20px;\n      font-size: 30pt;\n      height: 54px;\n      z-index: 2;\n      position: relative; }\n    #app #inputbox button {\n      font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n      height: 80px;\n      border: 3px solid #FFF;\n      position: relative;\n      margin-left: 5px;\n      width: 130px;\n      font-size: 13pt;\n      text-transform: uppercase; }\n    #app #inputbox button.disabled {\n      opacity: 0.5; }\n  #app #link {\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%); }\n    #app #link .link {\n      text-align: center;\n      font-size: 30pt;\n      display: inline-block;\n      margin-left: 50%;\n      -webkit-transform: translateX(-50%);\n              transform: translateX(-50%);\n      cursor: pointer; }\n    #app #link .context {\n      text-transform: uppercase;\n      transition: opacity 0.3s;\n      font-size: 8pt;\n      position: absolute;\n      top: 17px;\n      right: -30px; }\n  #app #message {\n    min-width: 530px;\n    margin-top: 40px; }\n    #app #message .text {\n      font-size: 30pt;\n      letter-spacing: -1px;\n      text-align: center; }\n    #app #message .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 80px; }\n      #app #message .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #stars {\n    width: 150%;\n    height: 150%;\n    position: absolute;\n    left: -25%;\n    top: -25%;\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n    z-index: 1; }\n\n@-webkit-keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n    #app #stars .p {\n      position: fixed;\n      left: 0px;\n      top: 50px;\n      width: 1px;\n      height: 1px;\n      background-color: white;\n      position: fixed;\n      -webkit-animation-timing-function: linear;\n              animation-timing-function: linear;\n      -webkit-animation-iteration-count: infinite;\n              animation-iteration-count: infinite; }\n    #app #stars .p::before {\n      position: absolute;\n      display: block;\n      content: \"\";\n      width: 100px;\n      right: 1px;\n      top: 0px;\n      height: 1px;\n      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 100%); }\n    #app #stars .p1 {\n      -webkit-animation-name: p1;\n              animation-name: p1;\n      -webkit-animation-duration: 70s;\n              animation-duration: 70s;\n      top: 10%; }\n    #app #stars .p2 {\n      -webkit-animation-name: p2;\n              animation-name: p2;\n      -webkit-animation-duration: 130s;\n              animation-duration: 130s;\n      top: 40%; }\n    #app #stars .p3 {\n      -webkit-animation-name: p3;\n              animation-name: p3;\n      -webkit-animation-duration: 190s;\n              animation-duration: 190s;\n      top: 80%; }\n  #app #footer {\n    position: fixed;\n    bottom: 0;\n    width: 100%;\n    height: 30px;\n    font-size: 6pt;\n    opacity: 0.8;\n    z-index: 2;\n    cursor: default; }\n    #app #footer > div {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%); }\n  #app .inputbox-leave {\n    opacity: 1; }\n  #app .inputbox-leave.inputbox-leave-active {\n    opacity: 0.01;\n    transition: 300ms;\n    transition-timing-function: ease-out; }\n  #app .link-enter {\n    opacity: 0.01; }\n  #app .link-enter.link-enter-active {\n    opacity: 1;\n    transition: 300ms;\n    transition-delay: 300ms;\n    transition-timing-function: ease-in; }\n", ""]);
+	exports.push([module.id, "/*! normalize.scss v0.1.0 | MIT License | based on git.io/normalize */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {\n  display: block; }\n\nol, ul {\n  list-style: none; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio, canvas, progress, video {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n[hidden], template {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\na:active, a:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb, strong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton, input, optgroup, select, textarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton, select {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton, html input[type=\"button\"], input[type=\"reset\"], input[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled], html input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner, input::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\nbutton:focus {\n  outline: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button, input[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  /* 2 */\n  box-sizing: content-box; }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button, input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd, th {\n  padding: 0; }\n\n/* ----------------------------------------------------------------------------------------------------\nSuper Form Reset\nA couple of things to watch out for:\n- IE8: If a text input doesn't have padding on all sides or none the text won't be centered.\n- The default border sizes on text inputs in all UAs seem to be slightly different. You're better off using custom borders.\n- You NEED to set the font-size and family on all form elements\n- Search inputs need to have their appearance reset and the box-sizing set to content-box to match other UAs\n- You can style the upload button in webkit using ::-webkit-file-upload-button\n- ::-webkit-file-upload-button selectors can't be used in the same selector as normal ones. FF and IE freak out.\n- IE: You don't need to fake inline-block with labels and form controls in IE. They function as inline-block.\n- By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs\n----------------------------------------------------------------------------------------------------*/\ninput, label, select, button, textarea {\n  margin: 0;\n  border: 0;\n  padding: 0;\n  display: inline-block;\n  vertical-align: middle;\n  white-space: normal;\n  background: none;\n  line-height: 1;\n  /* Browsers have different default form fonts */\n  font-size: 13px;\n  font-family: Arial; }\n\n/* Remove the stupid outer glow in Webkit */\ninput:focus {\n  outline: 0; }\n\n/* Box Sizing Reset\n-----------------------------------------------*/\n/* All of our custom controls should be what we expect them to be */\ninput, textarea {\n  box-sizing: content-box; }\n\n/* These elements are usually rendered a certain way by the browser */\nbutton, input[type=reset], input[type=button], input[type=submit], input[type=checkbox], input[type=radio], select {\n  box-sizing: border-box; }\n\n/* Text Inputs\n-----------------------------------------------*/\n/* Button Controls\n-----------------------------------------------*/\ninput[type=checkbox], input[type=radio] {\n  width: 13px;\n  height: 13px; }\n\n/* File Uploads\n-----------------------------------------------*/\n/* Search Input\n-----------------------------------------------*/\n/* Make webkit render the search input like a normal text field */\ninput[type=search] {\n  -webkit-appearance: textfield;\n  -webkit-box-sizing: content-box; }\n\n/* Turn off the recent search for webkit. It adds about 15px padding on the left */\n::-webkit-search-decoration {\n  display: none; }\n\n/* Buttons\n-----------------------------------------------*/\nbutton, input[type=\"reset\"], input[type=\"button\"], input[type=\"submit\"] {\n  /* Fix IE7 display bug */\n  overflow: visible;\n  width: auto; }\n\n/* IE8 and FF freak out if this rule is within another selector */\n::-webkit-file-upload-button {\n  padding: 0;\n  border: 0;\n  background: none; }\n\n/* Textarea\n-----------------------------------------------*/\ntextarea {\n  /* Move the label to the top */\n  vertical-align: top;\n  /* Turn off scroll bars in IE unless needed */\n  overflow: auto; }\n\n/* Selects\n-----------------------------------------------*/\nselect[multiple] {\n  /* Move the label to the top */\n  vertical-align: top; }\n\nul, li, div, p, h1, h2, h3, h4, h5, h6 {\n  padding: 0;\n  margin: 0; }\n\n* {\n  box-sizing: border-box; }\n\n::-webkit-input-placeholder {\n  color: #FFF; }\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  color: #FFF; }\n\n:-ms-input-placeholder {\n  /* IE 10+ */\n  color: #FFF; }\n\n:-moz-placeholder {\n  /* Firefox 18- */\n  color: #FFF; }\n\na {\n  color: #FFF;\n  text-decoration: none; }\n\nhtml {\n  min-height: 100%; }\n\nbody {\n  min-height: 100%;\n  height: 100%;\n  top: 0;\n  position: absolute;\n  overflow: hidden;\n  font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n  background-color: #020202;\n  color: #FFF;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: subpixel-antialiased;\n  text-shadow: 0 0 2px transparent;\n  font-size: 12pt; }\n\n#app {\n  width: 100%;\n  height: 100%; }\n  #app .wrapper {\n    background: url(\"/static/images/logo-background.jpg\") no-repeat center center fixed;\n    background-size: cover;\n    width: inherit;\n    height: inherit; }\n  #app .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    z-index: 2; }\n  #app .user-interaction {\n    min-height: 80px;\n    margin-top: 50px;\n    width: 625px; }\n  #app .grecaptcha-badge {\n    display: none; }\n  #app #logo {\n    max-width: 409px;\n    margin: 0 auto; }\n    #app #logo a {\n      width: 100%;\n      height: 100%;\n      display: block;\n      cursor: pointer; }\n    #app #logo .title-container {\n      position: relative;\n      width: 409px;\n      height: 114px; }\n    #app #logo .slogan {\n      text-align: center;\n      pointer-events: none; }\n  #app #inputbox {\n    position: relative;\n    height: 80px;\n    width: 625px;\n    display: block;\n    text-align: center; }\n    #app #inputbox .input-wrapper {\n      width: 490px;\n      display: inline-block;\n      position: relative;\n      float: left; }\n    #app #inputbox .input-wrapper .input-background {\n      width: 450px;\n      padding: 0 20px;\n      height: 3px;\n      position: absolute;\n      bottom: 12px;\n      left: 20px;\n      z-index: 1;\n      display: inline-block;\n      background-color: red;\n      opacity: 0; }\n    #app #inputbox .input-wrapper .input-background.show {\n      opacity: 1; }\n    #app #inputbox .input-wrapper input {\n      font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n      width: 444px;\n      border: 3px solid #FFF;\n      padding: 10px 20px;\n      font-size: 30pt;\n      height: 54px;\n      z-index: 2;\n      position: relative; }\n    #app #inputbox button {\n      font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n      height: 80px;\n      border: 3px solid #FFF;\n      position: relative;\n      margin-left: 5px;\n      width: 130px;\n      float: right;\n      font-size: 13pt;\n      text-transform: uppercase; }\n    #app #inputbox button.disabled {\n      opacity: 0.5; }\n  #app #link {\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%); }\n    #app #link .link {\n      text-align: center;\n      font-size: 30pt;\n      display: inline-block;\n      margin-left: 50%;\n      -webkit-transform: translateX(-50%);\n              transform: translateX(-50%);\n      cursor: pointer; }\n    #app #link .context {\n      text-transform: uppercase;\n      transition: opacity 0.3s;\n      font-size: 8pt;\n      position: absolute;\n      top: 17px;\n      right: -30px; }\n  #app #message {\n    min-width: 530px;\n    margin-top: 40px; }\n    #app #message .text {\n      font-size: 30pt;\n      letter-spacing: -1px;\n      text-align: center; }\n    #app #message .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 80px; }\n      #app #message .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #termsprivacy {\n    min-width: 530px;\n    margin-top: 40px;\n    font-size: 11pt;\n    line-height: 16pt; }\n    #app #termsprivacy .terms, #app #termsprivacy .privacy {\n      width: 100%;\n      height: 100%;\n      height: 347px;\n      overflow: hidden;\n      position: relative; }\n    #app #termsprivacy .privacy {\n      height: 305px; }\n    #app #termsprivacy .terms-inner, #app #termsprivacy .privacy-inner {\n      top: 0;\n      left: 0;\n      right: -17px;\n      height: 100%;\n      overflow-y: scroll;\n      position: absolute; }\n    #app #termsprivacy .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 60px; }\n      #app #termsprivacy .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #stars {\n    width: 150%;\n    height: 150%;\n    position: absolute;\n    left: -25%;\n    top: -25%;\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n    z-index: 1; }\n\n@-webkit-keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n    #app #stars .p {\n      position: fixed;\n      left: 0px;\n      top: 50px;\n      width: 1px;\n      height: 1px;\n      background-color: white;\n      position: fixed;\n      -webkit-animation-timing-function: linear;\n              animation-timing-function: linear;\n      -webkit-animation-iteration-count: infinite;\n              animation-iteration-count: infinite; }\n    #app #stars .p::before {\n      position: absolute;\n      display: block;\n      content: \"\";\n      width: 100px;\n      right: 1px;\n      top: 0px;\n      height: 1px;\n      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 100%); }\n    #app #stars .p1 {\n      -webkit-animation-name: p1;\n              animation-name: p1;\n      -webkit-animation-duration: 70s;\n              animation-duration: 70s;\n      top: 10%; }\n    #app #stars .p2 {\n      -webkit-animation-name: p2;\n              animation-name: p2;\n      -webkit-animation-duration: 130s;\n              animation-duration: 130s;\n      top: 40%; }\n    #app #stars .p3 {\n      -webkit-animation-name: p3;\n              animation-name: p3;\n      -webkit-animation-duration: 190s;\n              animation-duration: 190s;\n      top: 80%; }\n  #app #footer {\n    position: fixed;\n    bottom: 0;\n    width: 100%;\n    height: 60px;\n    font-size: 9pt;\n    opacity: 0.8;\n    z-index: 2;\n    cursor: default; }\n    #app #footer > ul {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%); }\n    #app #footer li {\n      position: relative;\n      cursor: pointer;\n      float: left; }\n    #app #footer li.divider {\n      width: 1px;\n      height: 14px;\n      background-color: #FFF;\n      cursor: default;\n      pointer-events: none;\n      margin: 0 9px; }\n  #app .inputbox-leave {\n    opacity: 1; }\n  #app .inputbox-leave.inputbox-leave-active {\n    opacity: 0.01;\n    transition: 300ms;\n    transition-timing-function: ease-out; }\n  #app .link-enter {\n    opacity: 0.01; }\n  #app .link-enter.link-enter-active {\n    opacity: 1;\n    transition: 300ms;\n    transition-delay: 300ms;\n    transition-timing-function: ease-in; }\n", ""]);
 
 	// exports
 
@@ -36264,6 +36428,312 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(54);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TermsPrivacy = function (_React$Component) {
+		_inherits(TermsPrivacy, _React$Component);
+
+		function TermsPrivacy() {
+			_classCallCheck(this, TermsPrivacy);
+
+			var _this = _possibleConstructorReturn(this, (TermsPrivacy.__proto__ || Object.getPrototypeOf(TermsPrivacy)).call(this));
+
+			_this.state = {
+				buttonCSS: {}
+			};
+			return _this;
+		}
+
+		_createClass(TermsPrivacy, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ id: "termsprivacy" },
+					this.props.terms && _react2.default.createElement(
+						"div",
+						{ className: "terms" },
+						_react2.default.createElement(
+							"div",
+							{ className: "terms-inner" },
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Terms of Service (\"Terms\")"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"Last updated: April 26, 2017",
+								_react2.default.createElement("br", null),
+								_react2.default.createElement("br", null),
+								"Please read these Terms of Service (\"Terms\", \"Terms of Service\") carefully before using the shortr.li website (the \"Service\") operated by Shortr (\"us\", \"we\", or \"our\"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service. By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service. This Terms of Service is licensed by TermsFeed Generator to Shortr."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Links To Other Web Sites"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"Our Service may contain links to third-party web sites or services that are not owned or controlled by Shortr. Shortr has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Shortr shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services. We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Termination"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Governing Law"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"These Terms shall be governed and construed in accordance with the laws of Ontario, Canada, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Changes"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 15 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Contact Us"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"If you have any questions about these Terms, please contact us."
+							)
+						)
+					),
+					this.props.privacy && _react2.default.createElement(
+						"div",
+						{ className: "privacy" },
+						_react2.default.createElement(
+							"div",
+							{ className: "privacy-inner" },
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Privacy Policy"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"Last updated: April 26, 2017",
+								_react2.default.createElement("br", null),
+								_react2.default.createElement("br", null),
+								"Shortr (\"us\", \"we\", or \"our\") operates the shortr.li website (the \"Service\"). This page informs you of our policies regarding the collection, use and disclosure of Personal Information when you use our Service. We will not use or share your information with anyone except as described in this Privacy Policy. This Privacy Policy is licensed by TermsFeed Generator to Shortr. We use your Personal Information for providing and improving the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible at shortr.li"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Information Collection And Use"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Log Data"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"We collect information that your browser sends whenever you visit our Service (\"Log Data\"). This Log Data may include information such as your computer's Internet Protocol (\"IP\") address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages and other statistics."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Cookies"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"Cookies are files with small amount of data, which may include an anonymous unique identifier. Cookies are sent to your browser from a web site and stored on your computer's hard drive. We use \"cookies\" to collect information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Service Providers"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"We may employ third party companies and individuals to facilitate our Service, to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing how our Service is used. These third parties have access to your Personal Information only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Security"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"The security of your Personal Information is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Information, we cannot guarantee its absolute security."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Links To Other Sites"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit. We have no control over, and assume no responsibility for the content, privacy policies or practices of any third party sites or services."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Children's Privacy"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"Our Service does not address anyone under the age of 13 (\"Children\"). We do not knowingly collect personally identifiable information from children under 13. If you are a parent or guardian and you are aware that your Children has provided us with Personal Information, please contact us. If we discover that a Children under 13 has provided us with Personal Information, we will delete such information from our servers immediately."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Changes To This Privacy Policy"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page."
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"h2",
+								null,
+								"Contact Us"
+							),
+							_react2.default.createElement("br", null),
+							_react2.default.createElement(
+								"p",
+								null,
+								"If you have any questions about this Privacy Policy, please contact us."
+							)
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "back" },
+						_react2.default.createElement(
+							"a",
+							{ href: "/" },
+							_react2.default.createElement(
+								"span",
+								{ onMouseDown: this.OnButtonMouseDown.bind(this),
+									onMouseUp: this.OnButtonMouseUp.bind(this),
+									onMouseLeave: this.OnButtonMouseLeave.bind(this),
+									style: this.state.buttonCSS },
+								"go back"
+							)
+						)
+					)
+				);
+			}
+		}, {
+			key: "OnButtonMouseDown",
+			value: function OnButtonMouseDown(event) {
+				this.setState(_extends({}, this.state, {
+					buttonCSS: {
+						transform: 'translate(1px, 1px)'
+					}
+				}));
+			}
+		}, {
+			key: "OnButtonMouseUp",
+			value: function OnButtonMouseUp(event) {
+				this.setState(_extends({}, this.state, {
+					buttonCSS: {}
+				}));
+			}
+		}, {
+			key: "OnButtonMouseLeave",
+			value: function OnButtonMouseLeave(event) {
+				this.setState(_extends({}, this.state, {
+					buttonCSS: {}
+				}));
+			}
+		}]);
+
+		return TermsPrivacy;
+	}(_react2.default.Component);
+
+	exports.default = TermsPrivacy;
 
 /***/ })
 /******/ ]);

@@ -9,11 +9,13 @@ class Enums {
 				"NOT_FOUND": "Whoops. That page doesn't exist.",
 				"INVALID_PARAM_HASH": "Invalid hash supplied.",
 				"INVALID_PARAM_URL": "Invalid URL supplied.",
+				"INVALID_PARAM_RECAPTCHA_TOKEN": "Invalid recaptcha token supplied.",
 				"RATE_LIMITED": "Your request was rate limited. Try again later.",
 				"GENERIC_ERROR": "An undiagnosed error has occurred.",
 				"CORS": "This resource is restricted to the shortr.li domain.",
 				"NO_RESULTS": "The request was made, but returned no results.",
-				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond."
+				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond.",
+				"RECAPTCHA_FAILED": "The request has failed a recaptcha challenge. Are you a robot?"
 			},
 			code: {
 				"OK": 200,

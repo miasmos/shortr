@@ -14,6 +14,7 @@ import InputBox from './components/InputBox/InputBox'
 import Logo from './components/Logo/Logo'
 import LinkDisplay from './components/LinkDisplay/LinkDisplay'
 import Message from './components/Message/Message'
+import TermsPrivacy from './components/TermsPrivacy/TermsPrivacy'
 import Stars from './components/Stars/Stars'
 import Footer from './components/Footer/Footer'
 
@@ -25,7 +26,10 @@ class App extends React.Component {
 		this.state = {
 			submitted: false,
 			hash: false,
-			error: QueryString.Error()
+			link: false,
+			error: QueryString.Error(),
+			terms: false,
+			privacy: false
 		}
 	}
 
@@ -35,15 +39,18 @@ class App extends React.Component {
 				<div className="content">
 					<Logo />
 					<div className="user-interaction">
-						{!this.state.error &&
+						{!this.state.error && !(this.state.terms || this.state.privacy) &&
 							<div>
 								<ReactCSSTransitionGroup transitionName="inputbox" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-									{!this.state.submitted && <InputBox requestLinkCreation={this.CreateLink.bind(this)} /> }
+									{!this.state.submitted && <InputBox requestLinkCreation={this.CreateLink.bind(this)} verifyCaptcha={this.VerifyCaptcha.bind(this)} setLink={this.SetLink.bind(this)} /> }
 								</ReactCSSTransitionGroup>
 								<ReactCSSTransitionGroup transitionName="link" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 									{this.state.submitted && !!this.state.hash && <LinkDisplay hash={this.state.hash} hide={!this.state.submitted} /> }
 								</ReactCSSTransitionGroup>
 							</div>
+						}
+						{(this.state.terms || this.state.privacy) &&
+							<TermsPrivacy terms={this.state.terms} privacy={this.state.privacy} clearTermsPrivacy={this.ClearTermsPrivacy.bind(this)} />
 						}
 						{this.state.error &&
 							<Message text={this.state.error} clearMessage={this.ClearMessage.bind(this)} />
@@ -51,7 +58,7 @@ class App extends React.Component {
 					</div>
 				</div>
 				<Stars />
-				<Footer />
+				<Footer showTerms={this.ShowTerms.bind(this)} showPrivacy={this.ShowPrivacy.bind(this)} />
 			</div>
 		)
 	}
@@ -63,7 +70,6 @@ class App extends React.Component {
 					...this.state,
 					hash: response.hash
 				})
-				console.log(response)
 			})
 			.catch(error => {
 				console.error(error)
@@ -75,10 +81,53 @@ class App extends React.Component {
 		})
 	}
 
+	VerifyCaptcha(token) {
+		ShortrAPI.VerifyCaptcha(token)
+			.then(response => {
+				if (response.success && this.state.link) {
+					this.CreateLink(this.state.link)
+				}
+			})
+			.catch(error => {
+				console.error(error)
+			})
+	}
+
+	SetLink(link) {
+		this.setState({
+			...this.state,
+			link: link
+		})
+	}
+
 	ClearMessage() {
 		this.setState({
 			...this.state,
 			error: false
+		})
+	}
+
+	ClearTermsPrivacy() {
+		this.setState({
+			...this.state,
+			terms: false,
+			privacy: false
+		})
+	}
+
+	ShowTerms() {
+		this.setState({
+			...this.state,
+			terms: true,
+			privacy: false
+		})
+	}
+
+	ShowPrivacy() {
+		this.setState({
+			...this.state,
+			privacy: true,
+			terms: false
 		})
 	}
 }

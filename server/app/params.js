@@ -5,7 +5,7 @@ import validator from 'validator'
 
 class Params {
 	constructor() {
-		this.routes = ['hash', 'url']
+		this.routes = ['hash', 'url', 'recaptchaToken']
 	}
 
 	hash(request, response, id) {
@@ -13,6 +13,10 @@ class Params {
 	}
 
 	url(request, response, id) {
+		return false
+	}
+
+	recaptchaToken() {
 		return false
 	}
 
@@ -56,6 +60,14 @@ class Validate {
 			return false
 		} else {
 			return new Error(Enum.error.message.INVALID_PARAM_URL, Enum.error.code.BAD_REQUEST)
+		}
+	}
+
+	static recaptchaToken(param) {
+		if (param.length < 200) {
+			return new Error(Enum.error.message.INVALID_PARAM_RECAPTCHA_TOKEN, Enum.error.code.BAD_REQUEST)
+		} else {
+			return false
 		}
 	}
 }

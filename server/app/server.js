@@ -39,7 +39,6 @@ export default class Server {
 			cert.key = fs.readFileSync(this.config.certificate.key, 'utf8')
 			cert.cert = fs.readFileSync(this.config.certificate.cert, 'utf8')
 		} else {
-			console.log(__dirname)
 			cert.key = fs.readFileSync(path.join(__dirname, this.config.certificate.key), 'utf8')
 			cert.cert = fs.readFileSync(path.join(__dirname, this.config.certificate.cert), 'utf8')
 		}

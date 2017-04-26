@@ -1,4 +1,8 @@
 {
 	"url": "shortr.li",
-	"port": "8080"
+	"twitterHandle": "shortr_canada",
+	"port": "8080",
+	"recaptcha": {
+		"public": "6Lfo0x4UAAAAAFa6hpbaSehNjuDqM0HH0X0mO501"
+	}
 }

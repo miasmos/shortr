@@ -59,7 +59,11 @@ body {
 	.user-interaction {
 		min-height: 80px;
    	 	margin-top: 50px;
-		width: 675px;
+		width: 625px;
+	}
+
+	.grecaptcha-badge {
+		display: none;
 	}
 
 	#logo {
@@ -94,7 +98,7 @@ body {
 
 		position: relative;
 		height: $inputHeight;
-		width: 675px;
+		width: 625px;
 		display: block;
 		text-align: center;
 
@@ -102,6 +106,7 @@ body {
 			width: 490px;
 			display: inline-block;
 			position: relative;
+			float: left;
 		}
 
 		.input-wrapper .input-background {
@@ -140,6 +145,7 @@ body {
 			position: relative;
 			margin-left: 5px;
 			width: 130px;
+			float: right;
 			font-size: 13pt;
 			text-transform: uppercase;
 		}
@@ -188,6 +194,51 @@ body {
 		    color: white;
 		    height: 47px;
 		    margin-top: 80px;
+
+			span {
+				font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			    font-size: 11pt;
+			    text-transform: uppercase;
+			    display: inline-block;
+			    height: 100%;
+			    border: 3px solid #FFF;
+			    padding: 9px 23px;
+			}
+		}
+	}
+
+	#termsprivacy {
+		min-width: 530px;
+		margin-top: 40px;
+		font-size: 11pt;
+		line-height: 16pt;
+
+		.terms, .privacy {
+			width: 100%;
+			height: 100%;
+			height: 347px;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.privacy {
+			height: 305px;
+		}
+
+		.terms-inner, .privacy-inner {
+			top: 0;
+			left: 0;
+			right: -17px;
+			height: 100%;
+			overflow-y: scroll;
+			position: absolute;
+		}
+
+		.back {
+			text-align: center;
+		    color: white;
+		    height: 47px;
+		    margin-top: 60px;
 
 			span {
 				font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -294,17 +345,32 @@ body {
 		position: fixed;
 		bottom: 0;
 		width: 100%;
-		height: 30px;
-		font-size: 6pt;
+		height: 60px;
+		font-size: 9pt;
 		opacity: 0.8;
 		z-index: 2;
 		cursor: default;
 
-		> div {
+		> ul {
 			position: absolute;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+		}
+
+		li {
+			position: relative;
+			cursor: pointer;
+			float: left;
+		}
+
+		li.divider {
+			width: 1px;
+			height: 14px;
+			background-color: $borderColor;
+			cursor: default;
+			pointer-events: none;
+			margin: 0 9px;
 		}
 	}
 

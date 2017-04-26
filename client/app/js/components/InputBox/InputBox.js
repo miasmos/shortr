@@ -2,7 +2,8 @@ import React from 'react'
 import {instance as Keyboard} from '../../services/Keyboard'
 import {instance as Enum} from '../../../../../core/enums'
 
-let validator = require('validator')
+let validator = require('validator'),
+	config = require('../../config.json')
 
 export default class InputBox extends React.Component {
 	constructor() {
@@ -16,12 +17,14 @@ export default class InputBox extends React.Component {
 		}
 
 		this.typingTimeout = undefined
+		window.captchaCallback = this.CaptchaCallback.bind(this)
 	}
 
 	render() {
 		let linkIsInvalid = this.state.link.length && !this.state.linkValid && this.state.dirty
 		return (
 			<div id="inputbox">
+				<form>
 					<div className="input-wrapper">
 						<input type="text"
 							ref="input"
@@ -31,7 +34,7 @@ export default class InputBox extends React.Component {
 							onKeyDown={this.OnInputKeyDown.bind(this)}
 							autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
 						/>
-						<div className={'input-background ' + (linkIsInvalid ? 'show' : '')} 
+						<div className={'input-background ' + (linkIsInvalid ? 'show' : '')}
 						></div>
 					</div>
 
@@ -39,13 +42,21 @@ export default class InputBox extends React.Component {
 						onClick={this.OnSubmit.bind(this)}
 						style={this.state.buttonCSS}
 						disabled={this.state.linkValid ? '' : 'disabled'}
-						className={this.state.linkValid ? '' : 'disabled'}
+						className={'g-recaptcha ' + (this.state.linkValid ? '' : 'disabled')}
+						data-sitekey={config.recaptcha.public}
+						data-theme="dark"
+						data-callback="captchaCallback"
 						onMouseDown={this.OnButtonMouseDown.bind(this)}
 						onMouseUp={this.OnButtonMouseUp.bind(this)}
 						onMouseLeave={this.OnButtonMouseLeave.bind(this)}
 					>Shorten</button>
+				</form>
 			</div>
 		)
+	}
+
+	CaptchaCallback(token) {
+		this.props.verifyCaptcha(token)
 	}
 
 	componentDidMount() {
@@ -110,7 +121,7 @@ export default class InputBox extends React.Component {
 		if (this.state.submitted) {
 			return
 		}
-		this.props.requestLinkCreation(this.state.link)
+		this.props.setLink(this.state.link)
 		this.refs.input.blur()
 
 		this.setState({

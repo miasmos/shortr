@@ -10,6 +10,10 @@ export default class ShortrAPI {
 		return this._resolve(`/api/hash/get/${hash}`)
 	}
 
+	static VerifyCaptcha(token) {
+		return this._resolve(`/api/captcha/verify/${token}`)
+	}
+
 	static _resolve(url) {
 		return new Promise((resolve, reject) => {
 			fetch(url)

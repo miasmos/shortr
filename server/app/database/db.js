@@ -29,6 +29,7 @@ export default class Database {
 		this.connection = new Sequelize(this.database, this.user, this.password, {
 			host: this.host,
 			port: this.port || 5432,
+			logging: false,
 			dialect: 'postgres',
 			pool: {
 				max: 5,

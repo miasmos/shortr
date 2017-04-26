@@ -1,4 +1,3 @@
 Set up workflow to copy static files from /client/app/images to /server/dist/static/images
 Analytics dashboard
-Rate limiting / Captcha
-Links in footer? To my site or twitter or something?
+Rate limiting

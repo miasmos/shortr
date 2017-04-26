@@ -1,5 +1,6 @@
 'use strict'
 import {instance as Log} from './services/Log'
+import {instance as Recaptcha} from './services/Recaptcha'
 import {instance as Enum} from '../../core/enums'
 import {Response} from './response/Response'
 import Database from './database/db'
@@ -55,6 +56,17 @@ class App {
 				})
 				.catch(error => {
 					console.log(error)
+					Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+				})
+		})
+
+		server.Route('/api/captcha/verify/:recaptchaToken', (request, response) => {
+			Recaptcha.Verify(request.params.recaptchaToken)
+				.then(data => {
+					Response.Ok(response, Messages.Recaptcha(data.success))
+				})
+				.catch(error => {
+					console.error(error)
 					Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
 				})
 		})

@@ -55,6 +55,8 @@
 
 	var _Log = __webpack_require__(2);
 
+	var _Recaptcha = __webpack_require__(27);
+
 	var _enums = __webpack_require__(3);
 
 	var _Response = __webpack_require__(4);
@@ -124,6 +126,15 @@
 				_Response.Response.Ok(response, _messages.Messages.Link(hash, url));
 			}).catch(function (error) {
 				console.log(error);
+				_Response.Response.Error(response, new _Error.ErrorExtended(_enums.instance.error.message.GENERIC_ERROR, _enums.instance.error.code.ERROR));
+			});
+		});
+
+		server.Route('/api/captcha/verify/:recaptchaToken', function (request, response) {
+			_Recaptcha.instance.Verify(request.params.recaptchaToken).then(function (data) {
+				_Response.Response.Ok(response, _messages.Messages.Recaptcha(data.success));
+			}).catch(function (error) {
+				console.error(error);
 				_Response.Response.Error(response, new _Error.ErrorExtended(_enums.instance.error.message.GENERIC_ERROR, _enums.instance.error.code.ERROR));
 			});
 		});
@@ -247,11 +258,13 @@
 				"NOT_FOUND": "Whoops. That page doesn't exist.",
 				"INVALID_PARAM_HASH": "Invalid hash supplied.",
 				"INVALID_PARAM_URL": "Invalid URL supplied.",
+				"INVALID_PARAM_RECAPTCHA_TOKEN": "Invalid recaptcha token supplied.",
 				"RATE_LIMITED": "Your request was rate limited. Try again later.",
 				"GENERIC_ERROR": "An undiagnosed error has occurred.",
 				"CORS": "This resource is restricted to the shortr.li domain.",
 				"NO_RESULTS": "The request was made, but returned no results.",
-				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond."
+				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond.",
+				"RECAPTCHA_FAILED": "The request has failed a recaptcha challenge. Are you a robot?"
 			},
 			code: {
 				"OK": 200,
@@ -382,6 +395,7 @@
 				this.connection = new Sequelize(this.database, this.user, this.password, {
 					host: this.host,
 					port: this.port || 5432,
+					logging: false,
 					dialect: 'postgres',
 					pool: {
 						max: 5,
@@ -656,7 +670,7 @@
 		function Params() {
 			_classCallCheck(this, Params);
 
-			this.routes = ['hash', 'url'];
+			this.routes = ['hash', 'url', 'recaptchaToken'];
 		}
 
 		_createClass(Params, [{
@@ -667,6 +681,11 @@
 		}, {
 			key: 'url',
 			value: function url(request, response, id) {
+				return false;
+			}
+		}, {
+			key: 'recaptchaToken',
+			value: function recaptchaToken() {
 				return false;
 			}
 		}, {
@@ -727,6 +746,15 @@
 					return false;
 				} else {
 					return new _Error.ErrorExtended(_enums.instance.error.message.INVALID_PARAM_URL, _enums.instance.error.code.BAD_REQUEST);
+				}
+			}
+		}, {
+			key: 'recaptchaToken',
+			value: function recaptchaToken(param) {
+				if (param.length < 200) {
+					return new _Error.ErrorExtended(_enums.instance.error.message.INVALID_PARAM_RECAPTCHA_TOKEN, _enums.instance.error.code.BAD_REQUEST);
+				} else {
+					return false;
 				}
 			}
 		}]);
@@ -800,6 +828,13 @@
 					link: link
 				};
 			}
+		}, {
+			key: "Recaptcha",
+			value: function Recaptcha(success) {
+				return {
+					success: success
+				};
+			}
 		}]);
 
 		return Messages;
@@ -868,7 +903,6 @@
 					cert.key = fs.readFileSync(this.config.certificate.key, 'utf8');
 					cert.cert = fs.readFileSync(this.config.certificate.cert, 'utf8');
 				} else {
-					console.log(__dirname);
 					cert.key = fs.readFileSync(path.join(__dirname, this.config.certificate.key), 'utf8');
 					cert.cert = fs.readFileSync(path.join(__dirname, this.config.certificate.cert), 'utf8');
 				}
@@ -1018,6 +1052,9 @@
 			"database": "shortr.li",
 			"host": "127.0.0.1",
 			"port": 5432
+		},
+		"recaptcha": {
+			"private": "6Lfo0x4UAAAAABThukSZ6HI2ZeQbwstYtbT5n_yU"
 		}
 	};
 
@@ -1025,7 +1062,68 @@
 /* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">\n\t<meta name=\"description\" content=\"Shortr is a premium link shortening service focusing on ease of use.\">\n\t<link href=\"https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed\" rel=\"stylesheet\">\n\t<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/static/images/apple-touch-icon.png\">\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/static/images/favicon-32x32.png\">\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/static/images/favicon-16x16.png\">\n\t<link rel=\"manifest\" href=\"/static/images/manifest.json\">\n\t<link rel=\"mask-icon\" href=\"/static/images/safari-pinned-tab.svg\" color=\"#5bbad5\">\n\t<link rel=\"shortcut icon\" href=\"/static/images/favicon.ico\">\n\t<meta name=\"msapplication-config\" content=\"/static/images/browserconfig.xml\">\n\t<meta name=\"theme-color\" content=\"#ffffff\">\n\t<title>Shortr | Shorten your links. Easily.</title>\n\t<style>\n\t\tbody {width: 100%; height: 100%; overflow: hidden;}\n\t\thtml,body,canvas {padding: 0; margin: 0;}\n\t</style>\n\t<div id=\"app\"></div>\n</head>\n<body>\n<script type=\"text/javascript\" src=\"static/js/index.compiled.js\"></script></body>\n</html>";
+	module.exports = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">\n\t<meta name=\"description\" content=\"Shortr is a premium link shortening service focusing on ease of use.\">\n\t<link href=\"https://fonts.googleapis.com/css?family=Oswald|Roboto+Condensed\" rel=\"stylesheet\">\n\t<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/static/images/apple-touch-icon.png\">\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/static/images/favicon-32x32.png\">\n\t<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/static/images/favicon-16x16.png\">\n\t<link rel=\"manifest\" href=\"/static/images/manifest.json\">\n\t<link rel=\"mask-icon\" href=\"/static/images/safari-pinned-tab.svg\" color=\"#5bbad5\">\n\t<link rel=\"shortcut icon\" href=\"/static/images/favicon.ico\">\n\t<meta name=\"msapplication-config\" content=\"/static/images/browserconfig.xml\">\n\t<meta name=\"theme-color\" content=\"#ffffff\">\n\t<title>Shortr | Shorten your links. Easily.</title>\n\t<style>\n\t\tbody {width: 100%; height: 100%; overflow: hidden;}\n\t\thtml,body,canvas {padding: 0; margin: 0;}\n\t</style>\n\t<div id=\"app\"></div>\n</head>\n<body>\n<script src=\"https://platform.twitter.com/widgets.js\"></script>\n<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>\n<script src=\"static/js/index.compiled.js\"></script></body>\n</html>";
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.instance = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(23);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var request = __webpack_require__(28),
+	    credentials = __webpack_require__(25);
+
+	var Recaptcha = function () {
+		function Recaptcha() {
+			_classCallCheck(this, Recaptcha);
+		}
+
+		_createClass(Recaptcha, [{
+			key: 'Verify',
+			value: function Verify(token) {
+				return new Promise(function (resolve, reject) {
+					request({
+						method: 'POST',
+						uri: 'https://www.google.com/recaptcha/api/siteverify',
+						form: {
+							secret: credentials.recaptcha.private,
+							response: token
+						}
+					}).then(function (body) {
+						try {
+							var json = JSON.parse(body);
+							resolve(json);
+						} catch (e) {
+							reject('Failed to parse JSON');
+						}
+					}).catch(function (error) {
+						reject(error);
+					});
+				});
+			}
+		}]);
+
+		return Recaptcha;
+	}();
+
+	var instance = exports.instance = new Recaptcha();
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	module.exports = require("request-promise");
 
 /***/ }
 /******/ ]);
