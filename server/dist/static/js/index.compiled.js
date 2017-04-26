@@ -85,11 +85,11 @@
 
 	var _InputBox2 = _interopRequireDefault(_InputBox);
 
-	var _Logo = __webpack_require__(313);
+	var _Logo = __webpack_require__(314);
 
 	var _Logo2 = _interopRequireDefault(_Logo);
 
-	var _LinkDisplay = __webpack_require__(314);
+	var _LinkDisplay = __webpack_require__(315);
 
 	var _LinkDisplay2 = _interopRequireDefault(_LinkDisplay);
 
@@ -97,15 +97,15 @@
 
 	var _Message2 = _interopRequireDefault(_Message);
 
-	var _TermsPrivacy = __webpack_require__(331);
+	var _TermsPrivacy = __webpack_require__(325);
 
 	var _TermsPrivacy2 = _interopRequireDefault(_TermsPrivacy);
 
-	var _Stars = __webpack_require__(325);
+	var _Stars = __webpack_require__(326);
 
 	var _Stars2 = _interopRequireDefault(_Stars);
 
-	var _Footer = __webpack_require__(326);
+	var _Footer = __webpack_require__(327);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -117,9 +117,9 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(327);
+	__webpack_require__(328);
 
-	var config = __webpack_require__(323);
+	var config = __webpack_require__(313);
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -31642,7 +31642,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var validator = __webpack_require__(249),
-	    config = __webpack_require__(323);
+	    config = __webpack_require__(313);
 
 	var InputBox = function (_React$Component) {
 		_inherits(InputBox, _React$Component);
@@ -31723,6 +31723,7 @@
 			value: function OnInputKeyDown(event) {
 				if (_Keyboard.instance.IsPressed(event, _enums.instance.keys.ENTER) && this.state.linkValid) {
 					event.preventDefault();
+					window.grecaptcha.execute();
 					this.OnSubmit();
 				} else {
 					this.OnLinkChange(event);
@@ -34525,6 +34526,19 @@
 
 /***/ }),
 /* 313 */
+/***/ (function(module, exports) {
+
+	module.exports = {
+		"url": "shortr.li",
+		"twitterHandle": "shortr_canada",
+		"port": "8080",
+		"recaptcha": {
+			"public": "6Lfo0x4UAAAAAFa6hpbaSehNjuDqM0HH0X0mO501"
+		}
+	};
+
+/***/ }),
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34587,7 +34601,7 @@
 	exports.default = Logo;
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34604,7 +34618,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactCopyToClipboard = __webpack_require__(315);
+	var _reactCopyToClipboard = __webpack_require__(316);
 
 	var _reactCopyToClipboard2 = _interopRequireDefault(_reactCopyToClipboard);
 
@@ -34616,7 +34630,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var config = __webpack_require__(323);
+	var config = __webpack_require__(313);
 
 	var LinkDisplay = function (_React$Component) {
 		_inherits(LinkDisplay, _React$Component);
@@ -34711,19 +34725,19 @@
 	exports.default = LinkDisplay;
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(316),
+	var _require = __webpack_require__(317),
 	    CopyToClipboard = _require.CopyToClipboard;
 
 	module.exports = CopyToClipboard;
 	//# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34739,15 +34753,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _createReactClass = __webpack_require__(317);
+	var _createReactClass = __webpack_require__(318);
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _propTypes = __webpack_require__(319);
+	var _propTypes = __webpack_require__(320);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _copyToClipboard = __webpack_require__(321);
+	var _copyToClipboard = __webpack_require__(322);
 
 	var _copyToClipboard2 = _interopRequireDefault(_copyToClipboard);
 
@@ -34803,7 +34817,7 @@
 	//# sourceMappingURL=Component.js.map
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -34819,7 +34833,7 @@
 	'use strict';
 
 	var React = __webpack_require__(54);
-	var factory = __webpack_require__(318);
+	var factory = __webpack_require__(319);
 
 	// Hack to grab NoopUpdateQueue from isomorphic React
 	var ReactNoopUpdateQueue = new React.Component().updater;
@@ -34832,7 +34846,7 @@
 
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35563,7 +35577,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35594,13 +35608,13 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(320)();
+	  module.exports = __webpack_require__(321)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -35660,12 +35674,12 @@
 
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var deselectCurrent = __webpack_require__(322);
+	var deselectCurrent = __webpack_require__(323);
 
 	var defaultMessage = 'Copy to clipboard: #{key}, Enter';
 
@@ -35744,7 +35758,7 @@
 
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports) {
 
 	
@@ -35787,19 +35801,6 @@
 	  };
 	};
 
-
-/***/ }),
-/* 323 */
-/***/ (function(module, exports) {
-
-	module.exports = {
-		"url": "shortr.li",
-		"twitterHandle": "shortr_canada",
-		"port": "8080",
-		"recaptcha": {
-			"public": "6Lfo0x4UAAAAAFa6hpbaSehNjuDqM0HH0X0mO501"
-		}
-	};
 
 /***/ }),
 /* 324 */
@@ -35909,548 +35910,6 @@
 
 /***/ }),
 /* 325 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(54);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Stars = function (_React$Component) {
-		_inherits(Stars, _React$Component);
-
-		function Stars() {
-			_classCallCheck(this, Stars);
-
-			return _possibleConstructorReturn(this, (Stars.__proto__ || Object.getPrototypeOf(Stars)).apply(this, arguments));
-		}
-
-		_createClass(Stars, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ id: "stars" },
-					_react2.default.createElement("div", { className: "p p1" }),
-					_react2.default.createElement("div", { className: "p p2" }),
-					_react2.default.createElement("div", { className: "p p3" })
-				);
-			}
-		}]);
-
-		return Stars;
-	}(_react2.default.Component);
-
-	exports.default = Stars;
-
-/***/ }),
-/* 326 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(54);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var config = __webpack_require__(323);
-
-	var Footer = function (_React$Component) {
-		_inherits(Footer, _React$Component);
-
-		function Footer() {
-			_classCallCheck(this, Footer);
-
-			var _this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this));
-
-			_this.state = {
-				TermsCSS: {},
-				PrivacyCSS: {},
-				ContactCSS: {}
-			};
-			return _this;
-		}
-
-		_createClass(Footer, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ id: 'footer' },
-					_react2.default.createElement(
-						'ul',
-						null,
-						_react2.default.createElement(
-							'li',
-							{ className: 'link', style: this.state.TermsCSS,
-								onMouseDown: this.AddCSS.bind(this, 'Terms'),
-								onMouseUp: this.ClearCSS.bind(this, 'Terms'),
-								onMouseLeave: this.ClearCSS.bind(this, 'Terms'),
-								onClick: this.props.showTerms },
-							'Terms'
-						),
-						_react2.default.createElement('li', { className: 'divider' }),
-						_react2.default.createElement(
-							'li',
-							{ className: 'link', style: this.state.PrivacyCSS,
-								onMouseDown: this.AddCSS.bind(this, 'Privacy'),
-								onMouseUp: this.ClearCSS.bind(this, 'Privacy'),
-								onMouseLeave: this.ClearCSS.bind(this, 'Privacy'),
-								onClick: this.props.showPrivacy },
-							'Privacy'
-						),
-						_react2.default.createElement('li', { className: 'divider' }),
-						_react2.default.createElement(
-							'li',
-							{ className: 'link', style: this.state.ContactCSS,
-								onMouseDown: this.AddCSS.bind(this, 'Contact'),
-								onMouseUp: this.ClearCSS.bind(this, 'Contact'),
-								onMouseLeave: this.ClearCSS.bind(this, 'Contact') },
-							_react2.default.createElement(
-								'a',
-								{ href: 'https://twitter.com/intent/tweet?text=@' + config.twitterHandle + ' ' },
-								'Contact'
-							)
-						)
-					)
-				);
-			}
-		}, {
-			key: 'AddCSS',
-			value: function AddCSS(type) {
-				switch (type) {
-					case 'Terms':
-						this.setState(_extends({}, this.state, {
-							TermsCSS: {
-								transform: 'translate(1px, 1px)'
-							}
-						}));
-						break;
-					case 'Privacy':
-						this.setState(_extends({}, this.state, {
-							PrivacyCSS: {
-								transform: 'translate(1px, 1px)'
-							}
-						}));
-						break;
-					case 'Contact':
-						this.setState(_extends({}, this.state, {
-							ContactCSS: {
-								transform: 'translate(1px, 1px)'
-							}
-						}));
-						break;
-				}
-			}
-		}, {
-			key: 'ClearCSS',
-			value: function ClearCSS(type) {
-				switch (type) {
-					case 'Terms':
-						this.setState(_extends({}, this.state, {
-							TermsCSS: {}
-						}));
-						break;
-					case 'Privacy':
-						this.setState(_extends({}, this.state, {
-							PrivacyCSS: {}
-						}));
-						break;
-					case 'Contact':
-						this.setState(_extends({}, this.state, {
-							ContactCSS: {}
-						}));
-						break;
-				}
-			}
-		}]);
-
-		return Footer;
-	}(_react2.default.Component);
-
-	exports.default = Footer;
-
-/***/ }),
-/* 327 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(328);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(330)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/postcss-loader/index.js!../../node_modules/sass-loader/index.js?sourceMap!./index.scss", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/postcss-loader/index.js!../../node_modules/sass-loader/index.js?sourceMap!./index.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 328 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(329)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/*! normalize.scss v0.1.0 | MIT License | based on git.io/normalize */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {\n  display: block; }\n\nol, ul {\n  list-style: none; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio, canvas, progress, video {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n[hidden], template {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\na:active, a:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb, strong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton, input, optgroup, select, textarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton, select {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton, html input[type=\"button\"], input[type=\"reset\"], input[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled], html input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner, input::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\nbutton:focus {\n  outline: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button, input[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  /* 2 */\n  box-sizing: content-box; }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button, input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd, th {\n  padding: 0; }\n\n/* ----------------------------------------------------------------------------------------------------\nSuper Form Reset\nA couple of things to watch out for:\n- IE8: If a text input doesn't have padding on all sides or none the text won't be centered.\n- The default border sizes on text inputs in all UAs seem to be slightly different. You're better off using custom borders.\n- You NEED to set the font-size and family on all form elements\n- Search inputs need to have their appearance reset and the box-sizing set to content-box to match other UAs\n- You can style the upload button in webkit using ::-webkit-file-upload-button\n- ::-webkit-file-upload-button selectors can't be used in the same selector as normal ones. FF and IE freak out.\n- IE: You don't need to fake inline-block with labels and form controls in IE. They function as inline-block.\n- By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs\n----------------------------------------------------------------------------------------------------*/\ninput, label, select, button, textarea {\n  margin: 0;\n  border: 0;\n  padding: 0;\n  display: inline-block;\n  vertical-align: middle;\n  white-space: normal;\n  background: none;\n  line-height: 1;\n  /* Browsers have different default form fonts */\n  font-size: 13px;\n  font-family: Arial; }\n\n/* Remove the stupid outer glow in Webkit */\ninput:focus {\n  outline: 0; }\n\n/* Box Sizing Reset\n-----------------------------------------------*/\n/* All of our custom controls should be what we expect them to be */\ninput, textarea {\n  box-sizing: content-box; }\n\n/* These elements are usually rendered a certain way by the browser */\nbutton, input[type=reset], input[type=button], input[type=submit], input[type=checkbox], input[type=radio], select {\n  box-sizing: border-box; }\n\n/* Text Inputs\n-----------------------------------------------*/\n/* Button Controls\n-----------------------------------------------*/\ninput[type=checkbox], input[type=radio] {\n  width: 13px;\n  height: 13px; }\n\n/* File Uploads\n-----------------------------------------------*/\n/* Search Input\n-----------------------------------------------*/\n/* Make webkit render the search input like a normal text field */\ninput[type=search] {\n  -webkit-appearance: textfield;\n  -webkit-box-sizing: content-box; }\n\n/* Turn off the recent search for webkit. It adds about 15px padding on the left */\n::-webkit-search-decoration {\n  display: none; }\n\n/* Buttons\n-----------------------------------------------*/\nbutton, input[type=\"reset\"], input[type=\"button\"], input[type=\"submit\"] {\n  /* Fix IE7 display bug */\n  overflow: visible;\n  width: auto; }\n\n/* IE8 and FF freak out if this rule is within another selector */\n::-webkit-file-upload-button {\n  padding: 0;\n  border: 0;\n  background: none; }\n\n/* Textarea\n-----------------------------------------------*/\ntextarea {\n  /* Move the label to the top */\n  vertical-align: top;\n  /* Turn off scroll bars in IE unless needed */\n  overflow: auto; }\n\n/* Selects\n-----------------------------------------------*/\nselect[multiple] {\n  /* Move the label to the top */\n  vertical-align: top; }\n\nul, li, div, p, h1, h2, h3, h4, h5, h6 {\n  padding: 0;\n  margin: 0; }\n\n* {\n  box-sizing: border-box; }\n\n::-webkit-input-placeholder {\n  color: #FFF; }\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  color: #FFF; }\n\n:-ms-input-placeholder {\n  /* IE 10+ */\n  color: #FFF; }\n\n:-moz-placeholder {\n  /* Firefox 18- */\n  color: #FFF; }\n\na {\n  color: #FFF;\n  text-decoration: none; }\n\nhtml {\n  min-height: 100%; }\n\nbody {\n  min-height: 100%;\n  height: 100%;\n  top: 0;\n  position: absolute;\n  overflow: hidden;\n  font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n  background-color: #020202;\n  color: #FFF;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: subpixel-antialiased;\n  text-shadow: 0 0 2px transparent;\n  font-size: 12pt; }\n\n#app {\n  width: 100%;\n  height: 100%; }\n  #app .wrapper {\n    background: url(\"/static/images/logo-background.jpg\") no-repeat center center fixed;\n    background-size: cover;\n    width: inherit;\n    height: inherit; }\n  #app .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    z-index: 2; }\n  #app .user-interaction {\n    min-height: 80px;\n    margin-top: 50px;\n    width: 625px; }\n  #app .grecaptcha-badge {\n    display: none; }\n  #app #logo {\n    max-width: 409px;\n    margin: 0 auto; }\n    #app #logo a {\n      width: 100%;\n      height: 100%;\n      display: block;\n      cursor: pointer; }\n    #app #logo .title-container {\n      position: relative;\n      width: 409px;\n      height: 114px; }\n    #app #logo .slogan {\n      text-align: center;\n      pointer-events: none; }\n  #app #inputbox {\n    position: relative;\n    height: 80px;\n    width: 625px;\n    display: block;\n    text-align: center; }\n    #app #inputbox .input-wrapper {\n      width: 490px;\n      display: inline-block;\n      position: relative;\n      float: left; }\n    #app #inputbox .input-wrapper .input-background {\n      width: 450px;\n      padding: 0 20px;\n      height: 3px;\n      position: absolute;\n      bottom: 12px;\n      left: 20px;\n      z-index: 1;\n      display: inline-block;\n      background-color: red;\n      opacity: 0; }\n    #app #inputbox .input-wrapper .input-background.show {\n      opacity: 1; }\n    #app #inputbox .input-wrapper input {\n      font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n      width: 444px;\n      border: 3px solid #FFF;\n      padding: 10px 20px;\n      font-size: 30pt;\n      height: 54px;\n      z-index: 2;\n      position: relative; }\n    #app #inputbox button {\n      font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n      height: 80px;\n      border: 3px solid #FFF;\n      position: relative;\n      margin-left: 5px;\n      width: 130px;\n      float: right;\n      font-size: 13pt;\n      text-transform: uppercase; }\n    #app #inputbox button.disabled {\n      opacity: 0.5; }\n  #app #link {\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%); }\n    #app #link .link {\n      text-align: center;\n      font-size: 30pt;\n      display: inline-block;\n      margin-left: 50%;\n      -webkit-transform: translateX(-50%);\n              transform: translateX(-50%);\n      cursor: pointer; }\n    #app #link .context {\n      text-transform: uppercase;\n      transition: opacity 0.3s;\n      font-size: 8pt;\n      position: absolute;\n      top: 17px;\n      right: -30px; }\n  #app #message {\n    min-width: 530px;\n    margin-top: 40px; }\n    #app #message .text {\n      font-size: 30pt;\n      letter-spacing: -1px;\n      text-align: center; }\n    #app #message .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 80px; }\n      #app #message .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #termsprivacy {\n    min-width: 530px;\n    margin-top: 40px;\n    font-size: 11pt;\n    line-height: 16pt; }\n    #app #termsprivacy .terms, #app #termsprivacy .privacy {\n      width: 100%;\n      height: 100%;\n      height: 347px;\n      overflow: hidden;\n      position: relative; }\n    #app #termsprivacy .privacy {\n      height: 305px; }\n    #app #termsprivacy .terms-inner, #app #termsprivacy .privacy-inner {\n      top: 0;\n      left: 0;\n      right: -17px;\n      height: 100%;\n      overflow-y: scroll;\n      position: absolute; }\n    #app #termsprivacy .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 60px; }\n      #app #termsprivacy .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #stars {\n    width: 150%;\n    height: 150%;\n    position: absolute;\n    left: -25%;\n    top: -25%;\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n    z-index: 1; }\n\n@-webkit-keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n    #app #stars .p {\n      position: fixed;\n      left: 0px;\n      top: 50px;\n      width: 1px;\n      height: 1px;\n      background-color: white;\n      position: fixed;\n      -webkit-animation-timing-function: linear;\n              animation-timing-function: linear;\n      -webkit-animation-iteration-count: infinite;\n              animation-iteration-count: infinite; }\n    #app #stars .p::before {\n      position: absolute;\n      display: block;\n      content: \"\";\n      width: 100px;\n      right: 1px;\n      top: 0px;\n      height: 1px;\n      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 100%); }\n    #app #stars .p1 {\n      -webkit-animation-name: p1;\n              animation-name: p1;\n      -webkit-animation-duration: 70s;\n              animation-duration: 70s;\n      top: 10%; }\n    #app #stars .p2 {\n      -webkit-animation-name: p2;\n              animation-name: p2;\n      -webkit-animation-duration: 130s;\n              animation-duration: 130s;\n      top: 40%; }\n    #app #stars .p3 {\n      -webkit-animation-name: p3;\n              animation-name: p3;\n      -webkit-animation-duration: 190s;\n              animation-duration: 190s;\n      top: 80%; }\n  #app #footer {\n    position: fixed;\n    bottom: 0;\n    width: 100%;\n    height: 60px;\n    font-size: 9pt;\n    opacity: 0.8;\n    z-index: 2;\n    cursor: default; }\n    #app #footer > ul {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%); }\n    #app #footer li {\n      position: relative;\n      cursor: pointer;\n      float: left; }\n    #app #footer li.divider {\n      width: 1px;\n      height: 14px;\n      background-color: #FFF;\n      cursor: default;\n      pointer-events: none;\n      margin: 0 9px; }\n  #app .inputbox-leave {\n    opacity: 1; }\n  #app .inputbox-leave.inputbox-leave-active {\n    opacity: 0.01;\n    transition: 300ms;\n    transition-timing-function: ease-out; }\n  #app .link-enter {\n    opacity: 0.01; }\n  #app .link-enter.link-enter-active {\n    opacity: 1;\n    transition: 300ms;\n    transition-delay: 300ms;\n    transition-timing-function: ease-in; }\n", ""]);
-
-	// exports
-
-
-/***/ }),
-/* 329 */
-/***/ (function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ }),
-/* 330 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-
-		update(obj);
-
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
-
-/***/ }),
-/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -36754,6 +36213,548 @@
 	}(_react2.default.Component);
 
 	exports.default = TermsPrivacy;
+
+/***/ }),
+/* 326 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(54);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Stars = function (_React$Component) {
+		_inherits(Stars, _React$Component);
+
+		function Stars() {
+			_classCallCheck(this, Stars);
+
+			return _possibleConstructorReturn(this, (Stars.__proto__ || Object.getPrototypeOf(Stars)).apply(this, arguments));
+		}
+
+		_createClass(Stars, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ id: "stars" },
+					_react2.default.createElement("div", { className: "p p1" }),
+					_react2.default.createElement("div", { className: "p p2" }),
+					_react2.default.createElement("div", { className: "p p3" })
+				);
+			}
+		}]);
+
+		return Stars;
+	}(_react2.default.Component);
+
+	exports.default = Stars;
+
+/***/ }),
+/* 327 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(54);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var config = __webpack_require__(313);
+
+	var Footer = function (_React$Component) {
+		_inherits(Footer, _React$Component);
+
+		function Footer() {
+			_classCallCheck(this, Footer);
+
+			var _this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this));
+
+			_this.state = {
+				TermsCSS: {},
+				PrivacyCSS: {},
+				ContactCSS: {}
+			};
+			return _this;
+		}
+
+		_createClass(Footer, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ id: 'footer' },
+					_react2.default.createElement(
+						'ul',
+						null,
+						_react2.default.createElement(
+							'li',
+							{ className: 'link', style: this.state.TermsCSS,
+								onMouseDown: this.AddCSS.bind(this, 'Terms'),
+								onMouseUp: this.ClearCSS.bind(this, 'Terms'),
+								onMouseLeave: this.ClearCSS.bind(this, 'Terms'),
+								onClick: this.props.showTerms },
+							'Terms'
+						),
+						_react2.default.createElement('li', { className: 'divider' }),
+						_react2.default.createElement(
+							'li',
+							{ className: 'link', style: this.state.PrivacyCSS,
+								onMouseDown: this.AddCSS.bind(this, 'Privacy'),
+								onMouseUp: this.ClearCSS.bind(this, 'Privacy'),
+								onMouseLeave: this.ClearCSS.bind(this, 'Privacy'),
+								onClick: this.props.showPrivacy },
+							'Privacy'
+						),
+						_react2.default.createElement('li', { className: 'divider' }),
+						_react2.default.createElement(
+							'li',
+							{ className: 'link', style: this.state.ContactCSS,
+								onMouseDown: this.AddCSS.bind(this, 'Contact'),
+								onMouseUp: this.ClearCSS.bind(this, 'Contact'),
+								onMouseLeave: this.ClearCSS.bind(this, 'Contact') },
+							_react2.default.createElement(
+								'a',
+								{ href: 'https://twitter.com/intent/tweet?text=@' + config.twitterHandle + ' ' },
+								'Contact'
+							)
+						)
+					)
+				);
+			}
+		}, {
+			key: 'AddCSS',
+			value: function AddCSS(type) {
+				switch (type) {
+					case 'Terms':
+						this.setState(_extends({}, this.state, {
+							TermsCSS: {
+								transform: 'translate(1px, 1px)'
+							}
+						}));
+						break;
+					case 'Privacy':
+						this.setState(_extends({}, this.state, {
+							PrivacyCSS: {
+								transform: 'translate(1px, 1px)'
+							}
+						}));
+						break;
+					case 'Contact':
+						this.setState(_extends({}, this.state, {
+							ContactCSS: {
+								transform: 'translate(1px, 1px)'
+							}
+						}));
+						break;
+				}
+			}
+		}, {
+			key: 'ClearCSS',
+			value: function ClearCSS(type) {
+				switch (type) {
+					case 'Terms':
+						this.setState(_extends({}, this.state, {
+							TermsCSS: {}
+						}));
+						break;
+					case 'Privacy':
+						this.setState(_extends({}, this.state, {
+							PrivacyCSS: {}
+						}));
+						break;
+					case 'Contact':
+						this.setState(_extends({}, this.state, {
+							ContactCSS: {}
+						}));
+						break;
+				}
+			}
+		}]);
+
+		return Footer;
+	}(_react2.default.Component);
+
+	exports.default = Footer;
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(329);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(331)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/postcss-loader/index.js!../../node_modules/sass-loader/index.js?sourceMap!./index.scss", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/postcss-loader/index.js!../../node_modules/sass-loader/index.js?sourceMap!./index.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(330)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "/*! normalize.scss v0.1.0 | MIT License | based on git.io/normalize */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {\n  display: block; }\n\nol, ul {\n  list-style: none; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio, canvas, progress, video {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n[hidden], template {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\na:active, a:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb, strong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton, input, optgroup, select, textarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton, select {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton, html input[type=\"button\"], input[type=\"reset\"], input[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled], html input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner, input::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\nbutton:focus {\n  outline: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button, input[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  /* 2 */\n  box-sizing: content-box; }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button, input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd, th {\n  padding: 0; }\n\n/* ----------------------------------------------------------------------------------------------------\nSuper Form Reset\nA couple of things to watch out for:\n- IE8: If a text input doesn't have padding on all sides or none the text won't be centered.\n- The default border sizes on text inputs in all UAs seem to be slightly different. You're better off using custom borders.\n- You NEED to set the font-size and family on all form elements\n- Search inputs need to have their appearance reset and the box-sizing set to content-box to match other UAs\n- You can style the upload button in webkit using ::-webkit-file-upload-button\n- ::-webkit-file-upload-button selectors can't be used in the same selector as normal ones. FF and IE freak out.\n- IE: You don't need to fake inline-block with labels and form controls in IE. They function as inline-block.\n- By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs\n----------------------------------------------------------------------------------------------------*/\ninput, label, select, button, textarea {\n  margin: 0;\n  border: 0;\n  padding: 0;\n  display: inline-block;\n  vertical-align: middle;\n  white-space: normal;\n  background: none;\n  line-height: 1;\n  /* Browsers have different default form fonts */\n  font-size: 13px;\n  font-family: Arial; }\n\n/* Remove the stupid outer glow in Webkit */\ninput:focus {\n  outline: 0; }\n\n/* Box Sizing Reset\n-----------------------------------------------*/\n/* All of our custom controls should be what we expect them to be */\ninput, textarea {\n  box-sizing: content-box; }\n\n/* These elements are usually rendered a certain way by the browser */\nbutton, input[type=reset], input[type=button], input[type=submit], input[type=checkbox], input[type=radio], select {\n  box-sizing: border-box; }\n\n/* Text Inputs\n-----------------------------------------------*/\n/* Button Controls\n-----------------------------------------------*/\ninput[type=checkbox], input[type=radio] {\n  width: 13px;\n  height: 13px; }\n\n/* File Uploads\n-----------------------------------------------*/\n/* Search Input\n-----------------------------------------------*/\n/* Make webkit render the search input like a normal text field */\ninput[type=search] {\n  -webkit-appearance: textfield;\n  -webkit-box-sizing: content-box; }\n\n/* Turn off the recent search for webkit. It adds about 15px padding on the left */\n::-webkit-search-decoration {\n  display: none; }\n\n/* Buttons\n-----------------------------------------------*/\nbutton, input[type=\"reset\"], input[type=\"button\"], input[type=\"submit\"] {\n  /* Fix IE7 display bug */\n  overflow: visible;\n  width: auto; }\n\n/* IE8 and FF freak out if this rule is within another selector */\n::-webkit-file-upload-button {\n  padding: 0;\n  border: 0;\n  background: none; }\n\n/* Textarea\n-----------------------------------------------*/\ntextarea {\n  /* Move the label to the top */\n  vertical-align: top;\n  /* Turn off scroll bars in IE unless needed */\n  overflow: auto; }\n\n/* Selects\n-----------------------------------------------*/\nselect[multiple] {\n  /* Move the label to the top */\n  vertical-align: top; }\n\nul, li, div, p, h1, h2, h3, h4, h5, h6 {\n  padding: 0;\n  margin: 0; }\n\n* {\n  box-sizing: border-box; }\n\n::-webkit-input-placeholder {\n  color: #FFF; }\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  color: #FFF; }\n\n:-ms-input-placeholder {\n  /* IE 10+ */\n  color: #FFF; }\n\n:-moz-placeholder {\n  /* Firefox 18- */\n  color: #FFF; }\n\na {\n  color: #FFF;\n  text-decoration: none; }\n\nhtml {\n  min-height: 100%; }\n\nbody {\n  min-height: 100%;\n  height: 100%;\n  top: 0;\n  position: absolute;\n  overflow: hidden;\n  font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n  background-color: #020202;\n  color: #FFF;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: subpixel-antialiased;\n  text-shadow: 0 0 2px transparent;\n  font-size: 12pt; }\n\n#app {\n  width: 100%;\n  height: 100%; }\n  #app .wrapper {\n    background: url(\"/static/images/logo-background.jpg\") no-repeat center center fixed;\n    background-size: cover;\n    width: inherit;\n    height: inherit; }\n  #app .content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    z-index: 2; }\n  #app .user-interaction {\n    min-height: 80px;\n    margin-top: 50px;\n    width: 625px; }\n  #app .grecaptcha-badge {\n    display: none; }\n  #app #logo {\n    max-width: 409px;\n    margin: 0 auto; }\n    #app #logo a {\n      width: 100%;\n      height: 100%;\n      display: block;\n      cursor: pointer; }\n    #app #logo .title-container {\n      position: relative;\n      width: 409px;\n      height: 114px; }\n    #app #logo .slogan {\n      text-align: center;\n      pointer-events: none; }\n  #app #inputbox {\n    position: relative;\n    height: 80px;\n    width: 625px;\n    display: block;\n    text-align: center; }\n    #app #inputbox .input-wrapper {\n      width: 490px;\n      display: inline-block;\n      position: relative;\n      float: left; }\n    #app #inputbox .input-wrapper .input-background {\n      width: 450px;\n      padding: 0 20px;\n      height: 3px;\n      position: absolute;\n      bottom: 12px;\n      left: 20px;\n      z-index: 1;\n      display: inline-block;\n      background-color: red;\n      opacity: 0; }\n    #app #inputbox .input-wrapper .input-background.show {\n      opacity: 1; }\n    #app #inputbox .input-wrapper input {\n      font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;\n      width: 444px;\n      border: 3px solid #FFF;\n      padding: 10px 20px;\n      font-size: 30pt;\n      height: 54px;\n      z-index: 2;\n      position: relative; }\n    #app #inputbox button {\n      font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n      height: 80px;\n      border: 3px solid #FFF;\n      position: relative;\n      margin-left: 5px;\n      width: 130px;\n      float: right;\n      font-size: 13pt;\n      text-transform: uppercase; }\n    #app #inputbox button.disabled {\n      opacity: 0.5; }\n  #app #link {\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%); }\n    #app #link .link {\n      text-align: center;\n      font-size: 30pt;\n      display: inline-block;\n      margin-left: 50%;\n      -webkit-transform: translateX(-50%);\n              transform: translateX(-50%);\n      cursor: pointer; }\n    #app #link .context {\n      text-transform: uppercase;\n      transition: opacity 0.3s;\n      font-size: 8pt;\n      position: absolute;\n      top: 17px;\n      right: -30px; }\n  #app #message {\n    min-width: 530px;\n    margin-top: 40px; }\n    #app #message .text {\n      font-size: 30pt;\n      letter-spacing: -1px;\n      text-align: center; }\n    #app #message .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 80px; }\n      #app #message .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #termsprivacy {\n    min-width: 530px;\n    margin-top: 40px;\n    font-size: 11pt;\n    line-height: 16pt; }\n    #app #termsprivacy .terms, #app #termsprivacy .privacy {\n      width: 100%;\n      height: 100%;\n      height: 347px;\n      overflow: hidden;\n      position: relative; }\n    #app #termsprivacy .privacy {\n      height: 305px; }\n    #app #termsprivacy .terms-inner, #app #termsprivacy .privacy-inner {\n      top: 0;\n      left: 0;\n      right: -17px;\n      height: 100%;\n      overflow-y: scroll;\n      position: absolute; }\n    #app #termsprivacy .back {\n      text-align: center;\n      color: white;\n      height: 47px;\n      margin-top: 60px; }\n      #app #termsprivacy .back span {\n        font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n        font-size: 11pt;\n        text-transform: uppercase;\n        display: inline-block;\n        height: 100%;\n        border: 3px solid #FFF;\n        padding: 9px 23px; }\n  #app #stars {\n    width: 150%;\n    height: 150%;\n    position: absolute;\n    left: -25%;\n    top: -25%;\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n    z-index: 1; }\n\n@-webkit-keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p1 {\n  0% {\n    left: -100px; }\n  85.71429% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p2 {\n  0% {\n    left: -100px; }\n  92.30769% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@-webkit-keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n\n@keyframes p3 {\n  0% {\n    left: -100px; }\n  94.73684% {\n    left: -100px; }\n  100% {\n    left: calc( 100% + 100px); } }\n    #app #stars .p {\n      position: fixed;\n      left: 0px;\n      top: 50px;\n      width: 1px;\n      height: 1px;\n      background-color: white;\n      position: fixed;\n      -webkit-animation-timing-function: linear;\n              animation-timing-function: linear;\n      -webkit-animation-iteration-count: infinite;\n              animation-iteration-count: infinite; }\n    #app #stars .p::before {\n      position: absolute;\n      display: block;\n      content: \"\";\n      width: 100px;\n      right: 1px;\n      top: 0px;\n      height: 1px;\n      background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 100%); }\n    #app #stars .p1 {\n      -webkit-animation-name: p1;\n              animation-name: p1;\n      -webkit-animation-duration: 70s;\n              animation-duration: 70s;\n      top: 10%; }\n    #app #stars .p2 {\n      -webkit-animation-name: p2;\n              animation-name: p2;\n      -webkit-animation-duration: 130s;\n              animation-duration: 130s;\n      top: 40%; }\n    #app #stars .p3 {\n      -webkit-animation-name: p3;\n              animation-name: p3;\n      -webkit-animation-duration: 190s;\n              animation-duration: 190s;\n      top: 80%; }\n  #app #footer {\n    position: fixed;\n    bottom: 0;\n    width: 100%;\n    height: 60px;\n    font-size: 9pt;\n    opacity: 0.8;\n    z-index: 2;\n    cursor: default; }\n    #app #footer > ul {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%); }\n    #app #footer li {\n      position: relative;\n      cursor: pointer;\n      float: left; }\n    #app #footer li.divider {\n      width: 1px;\n      height: 14px;\n      background-color: #FFF;\n      cursor: default;\n      pointer-events: none;\n      margin: 0 9px; }\n  #app .inputbox-leave {\n    opacity: 1; }\n  #app .inputbox-leave.inputbox-leave-active {\n    opacity: 0.01;\n    transition: 300ms;\n    transition-timing-function: ease-out; }\n  #app .link-enter {\n    opacity: 0.01; }\n  #app .link-enter.link-enter-active {\n    opacity: 1;\n    transition: 300ms;\n    transition-delay: 300ms;\n    transition-timing-function: ease-in; }\n", ""]);
+
+	// exports
+
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
 
 /***/ })
 /******/ ]);

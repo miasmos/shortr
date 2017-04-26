@@ -1,18 +1,12 @@
 var webpack = require('webpack'),
     path = require('path'),
     WebpackStripLoader = require('strip-loader'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin"),
+    externals = require('webpack-node-externals'),
     stripLoader = {
      test: [/\.js$/, /\.es6$/],
      exclude: /node_modules/,
      loader: WebpackStripLoader.loader('console.log')
-    },
-    HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-        template: __dirname + '/app/index.html',
-        filename: 'index.html',
-        inject: 'body'
-    })
+    }
 
 module.exports = {
   entry: [
@@ -26,23 +20,28 @@ module.exports = {
   loaders: [
     stripLoader
   ],
-  output: {
-    path: __dirname + '/dist',
-    filename: "index.compiled.js"
+  resolveLoader: {
+    root: path.join(__dirname, 'node_modules')
   },
   target: 'node',
   node: {
     __dirname: false,
     __filename: false,
   },
+  externals: [externals()],
+  output: {
+    path: __dirname + '/dist',
+    filename: "index.compiled.js"
+  },
   module: {
+    devtool: "source-map", // or "inline-source-map"
     loaders: [
       {
         test: /\.js$/,
         exclude: [/node_modules/, /joi-browser/],
         include: [path.resolve(__dirname, 'app'), path.resolve(__dirname, '../core')],
         loader: "babel-loader",
-        quersy: {
+        query: {
             presets: ['react', 'es2015', 'stage-0']
         }
       },
@@ -59,24 +58,6 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    HTMLWebpackPluginConfig,
-    new CommonsChunkPlugin("commons.chunk.js"),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.IgnorePlugin(/websocket/),
-    new webpack.optimize.UglifyJsPlugin({
-       output: {
-          space_colon: false,
-          comments: function(node, comment) {
-              var text = comment.value;
-              var type = comment.type;
-              if (type == "comment2") {
-                  // multiline comment
-                  return /@copyright/i.test(text);
-              }
-          }
-      }
     })
   ]
-};
+}

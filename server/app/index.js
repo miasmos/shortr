@@ -17,7 +17,8 @@ let server = new Server(),
 
 class App {
 	constructor() {
-		this.db = new Database(credentials.database)
+		this.credentials = process.env.NODE_ENV === 'production' ? credentials.production : credentials.development
+		this.db = new Database(this.credentials.database)
 
 		Params.Apply(server)
 

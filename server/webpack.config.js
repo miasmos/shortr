@@ -1,7 +1,7 @@
 var webpack = require('webpack'),
     path = require('path'),
     WebpackStripLoader = require('strip-loader'),
-    externals = require('webpack-node-externals')
+    externals = require('webpack-node-externals'),
     stripLoader = {
      test: [/\.js$/, /\.es6$/],
      exclude: /node_modules/,

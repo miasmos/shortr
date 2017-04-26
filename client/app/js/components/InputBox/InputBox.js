@@ -66,6 +66,7 @@ export default class InputBox extends React.Component {
 	OnInputKeyDown(event) {
 		if (Keyboard.IsPressed(event, Enum.keys.ENTER) && this.state.linkValid) {
 			event.preventDefault()
+			window.grecaptcha.execute()
 			this.OnSubmit()
 		} else {
 			this.OnLinkChange(event)
