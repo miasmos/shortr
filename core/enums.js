@@ -15,7 +15,7 @@ class Enums {
 				"CORS": "This resource is restricted to the shortr.li domain.",
 				"NO_RESULTS": "The request was made, but returned no results.",
 				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond.",
-				"RECAPTCHA_FAILED": "The request has failed a recaptcha challenge. Are you a robot?"
+				"RECAPTCHA_FAILED": "You failed to complete the captcha. Are you a robot?"
 			},
 			code: {
 				"OK": 200,

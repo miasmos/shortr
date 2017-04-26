@@ -186,6 +186,7 @@
 					}));
 				}).catch(function (error) {
 					console.error(error);
+					_this2.AddMessage('GENERIC_ERROR');
 				});
 
 				this.setState(_extends({}, this.state, {
@@ -200,9 +201,12 @@
 				_ShortrAPI2.default.VerifyCaptcha(token).then(function (response) {
 					if (response.success && _this3.state.link) {
 						_this3.CreateLink(_this3.state.link);
+					} else if (!response.success) {
+						_this3.AddMessage('RECAPTCHA_FAILED');
 					}
 				}).catch(function (error) {
 					console.error(error);
+					_this3.AddMessage('GENERIC_ERROR');
 				});
 			}
 		}, {
@@ -211,6 +215,15 @@
 				this.setState(_extends({}, this.state, {
 					link: link
 				}));
+			}
+		}, {
+			key: 'AddMessage',
+			value: function AddMessage(key) {
+				if (key in _enums.instance.error.message) {
+					this.setState(_extends({}, this.state, {
+						error: _enums.instance.error.message[key].replace(/(\. )/g, '.\n')
+					}));
+				}
 			}
 		}, {
 			key: 'ClearMessage',
@@ -738,7 +751,7 @@
 				"CORS": "This resource is restricted to the shortr.li domain.",
 				"NO_RESULTS": "The request was made, but returned no results.",
 				"SERVICE_UNAVAILABLE": "The requested service is unavailable. It is either down or slow to respond.",
-				"RECAPTCHA_FAILED": "The request has failed a recaptcha challenge. Are you a robot?"
+				"RECAPTCHA_FAILED": "You failed to complete the captcha. Are you a robot?"
 			},
 			code: {
 				"OK": 200,
@@ -35837,7 +35850,14 @@
 					_react2.default.createElement(
 						"p",
 						{ className: "text" },
-						this.props.text
+						this.props.text.split('\n').map(function (item, key) {
+							return _react2.default.createElement(
+								"span",
+								{ key: key },
+								item,
+								_react2.default.createElement("br", null)
+							);
+						})
 					),
 					_react2.default.createElement(
 						"div",

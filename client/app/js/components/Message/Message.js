@@ -10,7 +10,15 @@ export default class Message extends React.Component {
 	render() {
 		return (
 			<div id="message">
-				<p className="text">{this.props.text}</p>
+				<p className="text">
+					{
+						this.props.text.split('\n').map(
+							(item, key) => {
+								return (<span key={key}>{item}<br/></span>)
+							}
+						)
+					}
+				</p>
 				<div className="back">
 					<a href="/">
 						<span onMouseDown={this.OnButtonMouseDown.bind(this)}

@@ -73,6 +73,7 @@ class App extends React.Component {
 			})
 			.catch(error => {
 				console.error(error)
+				this.AddMessage('GENERIC_ERROR')
 			})
 
 		this.setState({
@@ -86,10 +87,13 @@ class App extends React.Component {
 			.then(response => {
 				if (response.success && this.state.link) {
 					this.CreateLink(this.state.link)
+				} else if (!response.success) {
+					this.AddMessage('RECAPTCHA_FAILED')
 				}
 			})
 			.catch(error => {
 				console.error(error)
+				this.AddMessage('GENERIC_ERROR')
 			})
 	}
 
@@ -98,6 +102,15 @@ class App extends React.Component {
 			...this.state,
 			link: link
 		})
+	}
+
+	AddMessage(key) {
+		if (key in Enum.error.message) {
+			this.setState({
+				...this.state,
+				error: Enum.error.message[key].replace(/(\. )/g, '.\n')
+			})
+		}
 	}
 
 	ClearMessage() {
