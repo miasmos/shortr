@@ -9,7 +9,6 @@ Add router for privacy/terms
 Refactor using redux
 Add additional param validation?
 Proper logging
-Install helmet / verify libraries used don't have any known vulnerabilities
 Continuous integration
 
 - Future

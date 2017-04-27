@@ -82,6 +82,7 @@ class App extends React.Component {
 	}
 
 	AddMessage(key) {
+		if (!key || !key.length) key = 'GENERIC_ERROR'
 		if (key in Enum.error.message) {
 			this.setState({
 				...this.state,

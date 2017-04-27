@@ -34,6 +34,10 @@
 	#footer {
 		height: 120px;
 		font-size: 14pt;
+
+		li.divider {
+			height: 23px;
+		}
 	}
 }
 
@@ -41,5 +45,9 @@
 	#footer {
 		height: 80px;
 		font-size: 9pt;
+
+		li.divider {
+			height: 14px;
+		}
 	}
 }
