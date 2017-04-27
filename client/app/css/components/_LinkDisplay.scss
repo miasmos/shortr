@@ -1,0 +1,62 @@
+#link {
+	position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+	.link {
+		text-align: center;
+		font-size: $inputFontSize;
+		display: inline-block;
+		margin-left: 50%;
+		transform: translateX(-50%);
+		cursor: pointer;
+	}
+
+	.context {
+		text-transform: uppercase;
+		transition: opacity 0.3s;
+		font-size: 8pt;
+		position: absolute;
+		top: 17px;
+		right: -30px;
+	}
+}
+
+@media(max-width: $screenSizeiPhone6Plus) {
+	#link {
+		.link {
+			font-size: 24pt;
+		}
+
+		.context {
+			top: 13px;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6) {
+	#link {
+		.link {
+			font-size: 20pt;
+		}
+
+		.context {
+			top: 10px;
+		}
+	}
+}
+
+
+@media(max-width: $screenSizeiPhone5) {
+	#link {
+		.link {
+			font-size: 16pt;
+		}
+
+		.context {
+		    font-size: 7pt;
+		    top: 7px;
+		    right: -26px;
+		}
+	}
+}

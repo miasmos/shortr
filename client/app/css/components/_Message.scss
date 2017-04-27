@@ -1,0 +1,61 @@
+#message {
+	min-width: 530px;
+	margin-top: 40px;
+
+	.text {
+		font-size: 30pt;
+		letter-spacing: -1px;
+		text-align: center;
+	}
+
+	.back {
+		text-align: center;
+	    color: white;
+	    height: 47px;
+	    margin-top: 80px;
+
+		span {
+			font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		    font-size: 11pt;
+		    text-transform: uppercase;
+		    display: inline-block;
+		    height: 100%;
+		    border: 3px solid #FFF;
+		    padding: 9px 23px;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6Plus) {
+	#message {
+		min-width: 229px;
+
+		.text {
+			font-size: 24pt;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6) {
+	#message {
+		min-width: 305px;
+
+		.text {
+			font-size: 20pt;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone5) {
+	#message {
+		min-width: 265px;
+
+		.text {
+			font-size: 16pt;
+		}
+
+		.back {
+			margin-top: 70px;
+		}
+	}
+}

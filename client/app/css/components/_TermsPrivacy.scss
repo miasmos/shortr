@@ -1,0 +1,84 @@
+#termsprivacy {
+	min-width: 530px;
+	margin-top: 40px;
+	font-size: 11pt;
+	line-height: 16pt;
+
+	.terms, .privacy {
+		width: 100%;
+		height: 100%;
+		height: 347px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.privacy {
+		height: 305px;
+	}
+
+	.terms-inner, .privacy-inner {
+		top: 0;
+		left: 0;
+		right: -17px;
+		height: 100%;
+		overflow-y: scroll;
+		position: absolute;
+	}
+
+	.back {
+		text-align: center;
+	    color: white;
+	    height: 47px;
+	    margin-top: 60px;
+
+		span {
+			font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		    font-size: 11pt;
+		    text-transform: uppercase;
+		    display: inline-block;
+		    height: 100%;
+		    border: 3px solid #FFF;
+		    padding: 9px 23px;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6Plus) {
+	#termsprivacy {
+		min-width: 335px;
+
+		.terms, .privacy {
+			height: 244px;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6) {
+	#termsprivacy {
+		min-width: 305px;
+		font-size: 10pt;
+		line-height: 14pt;
+
+		.terms-inner, .privacy-inner {
+			right: 0;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone5) {
+	#termsprivacy {
+		min-width: 265px;
+
+		.terms, .privacy {
+			height: 172px;
+		}
+
+		.back {
+			margin-top: 40px;
+		}
+
+		.back span {
+			padding: 11px 23px;
+		}
+	}
+}

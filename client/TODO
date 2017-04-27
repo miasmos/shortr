@@ -2,3 +2,8 @@ Set up workflow to copy static files from /client/app/images to /server/dist/sta
 Analytics dashboard
 Rate limiting
 Tie shortened url requests to captcha tokens
+Clean up mobile CSS
+Transition to privacy/terms
+Fix ssl cert on android browsers
+Add http2
+Add button feedback to mobile? Is it needed?

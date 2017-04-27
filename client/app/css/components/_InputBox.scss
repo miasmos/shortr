@@ -1,0 +1,209 @@
+#inputbox {
+	$inputHeight: 80px;
+	$inputPaddingV: 10px;
+	$inputPaddingH: 20px;
+	$inputBorder: 3px;
+	$inputWidth: 490px;
+
+	position: relative;
+	height: $inputHeight;
+	width: 625px;
+	display: block;
+	text-align: center;
+
+	.input-wrapper {
+		width: $inputWidth;
+		display: inline-block;
+		position: relative;
+		float: left;
+	}
+
+	.input-wrapper .input-background {
+		width: #{$inputWidth - $inputPaddingH*2};
+		padding: 0 $inputPaddingH;
+		height: 3px;
+		position: absolute;
+		bottom: 12px;
+		left: $inputPaddingH;
+		z-index: 1;
+		display: inline-block;
+		background-color: red;
+		opacity: 0;
+		// transition: opacity 0.7s;
+	}
+
+	.input-wrapper .input-background.show {
+		opacity: 1;
+	}
+
+	.input-wrapper input {
+		font-family: 'Roboto Condensed', 'Helvetica Neue', helvetica, Arial, sans-serif;
+		width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+		border: $inputBorder solid $borderColor;
+		padding: $inputPaddingV $inputPaddingH;
+		font-size: $inputFontSize;
+		height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+		z-index: 2;
+		position: relative;
+	}
+
+	button {
+		font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		height: #{$inputHeight};
+		border: $inputBorder solid $borderColor;
+		position: relative;
+		margin-left: 5px;
+		width: 130px;
+		float: right;
+		font-size: 13pt;
+		text-transform: uppercase;
+	}
+
+	button.disabled {
+		opacity: 0.5;
+	}
+}
+
+@media(max-width: $screenSizeiPhone6Plus) {
+	#inputbox {
+		$totalWidth: 335px;
+		$inputHeight: 60px;
+		$inputPaddingV: 10px;
+		$inputPaddingH: 20px;
+		$inputBorder: 3px;
+		$inputWidth: 250px;
+
+		height: $inputHeight;
+		width: $totalWidth;
+
+		.input-wrapper {
+			width: $inputWidth;
+		}
+
+		.input-wrapper .input-background {
+			width: #{$inputWidth - $inputPaddingH*2};
+			padding: 0 $inputPaddingH;
+			height: 3px;
+			position: absolute;
+			bottom: 12px;
+			left: $inputPaddingH;
+			z-index: 1;
+			display: inline-block;
+			background-color: red;
+			opacity: 0;
+		}
+
+		.input-wrapper input {
+			font-size: 22pt;
+			width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+			border: $inputBorder solid $borderColor;
+			padding: $inputPaddingV $inputPaddingH;
+			height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+		}
+
+		button {
+			font-size: 11pt;
+			height: #{$inputHeight};
+			border: $inputBorder solid $borderColor;
+			margin-left: 5px;
+			width: #{$totalWidth - $inputWidth - 5};
+			font-size: 10pt;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6) {
+	#inputbox {
+		$totalWidth: 305px;
+		$inputHeight: 60px;
+		$inputPaddingV: 10px;
+		$inputPaddingH: 20px;
+		$inputBorder: 3px;
+		$inputWidth: 230px;
+
+		height: $inputHeight;
+		width: $totalWidth;
+
+		.input-wrapper {
+			width: $inputWidth;
+		}
+
+		.input-wrapper .input-background {
+			width: #{$inputWidth - $inputPaddingH*2};
+			padding: 0 $inputPaddingH;
+			height: 3px;
+			position: absolute;
+			bottom: 12px;
+			left: $inputPaddingH;
+			z-index: 1;
+			display: inline-block;
+			background-color: red;
+			opacity: 0;
+		}
+
+		.input-wrapper input {
+			font-size: 22pt;
+			width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+			border: $inputBorder solid $borderColor;
+			padding: $inputPaddingV $inputPaddingH;
+			height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+		}
+
+		button {
+			font-size: 11pt;
+			height: #{$inputHeight};
+			border: $inputBorder solid $borderColor;
+			margin-left: 5px;
+			width: #{$totalWidth - $inputWidth - 5};
+			font-size: 10pt;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone5) {
+	#inputbox {
+		$totalWidth: 265px;
+		$inputHeight: 60px;
+		$inputPaddingV: 10px;
+		$inputPaddingH: 20px;
+		$inputBorder: 3px;
+		$inputWidth: 170px;
+
+		height: $inputHeight;
+		width: $totalWidth;
+
+		.input-wrapper {
+			width: $inputWidth;
+		}
+
+		.input-wrapper .input-background {
+			width: #{$inputWidth - $inputPaddingH*2};
+			padding: 0 $inputPaddingH;
+			height: 3px;
+			position: absolute;
+			bottom: 12px;
+			left: $inputPaddingH;
+			z-index: 1;
+			display: inline-block;
+			background-color: red;
+			opacity: 0;
+		}
+
+		.input-wrapper input {
+			font-size: 17pt;
+			width: #{$inputWidth - $inputPaddingH*2 - $inputBorder*2};
+			border: $inputBorder solid $borderColor;
+			padding: $inputPaddingV $inputPaddingH;
+			height: #{$inputHeight - $inputPaddingV*2 - $inputBorder*2};
+		}
+
+		button {
+			font-size: 11pt;
+			height: #{$inputHeight};
+			border: $inputBorder solid $borderColor;
+			margin-left: 5px;
+			width: #{$totalWidth - $inputWidth - 5};
+			font-size: 10pt;
+		}
+	}
+}

@@ -1,0 +1,88 @@
+#stars {
+	width: 150%;
+    height: 150%;
+    position: absolute;
+    left: -25%;
+    top: -25%;
+    transform: rotate(45deg);
+    z-index: 1;
+
+    $interval: 1; //in minutes
+    $duration: 10; //in seconds
+	@keyframes p1
+	{
+	    0% {
+	        left: -100px;
+	    }
+	    #{((1 - ($duration / ($duration + $interval*60))) * 100) + '%'} {
+	    	left: -100px;
+	    }
+	    100% {
+	        left: calc( 100% + 100px );
+	    }
+	}
+
+	@keyframes p2
+	{
+	    0% {
+	        left: -100px;
+	    }
+	    #{((1 - ($duration / ($duration + $interval*60*2))) * 100) + '%'} {
+	    	left: -100px;
+	    }
+	    100% {
+	        left: calc( 100% + 100px );
+	    }
+	}
+
+	@keyframes p3
+	{
+	    0% {
+	        left: -100px;
+	    }
+	    #{((1 - ($duration / ($duration + $interval*60*3))) * 100) + '%'} {
+	    	left: -100px;
+	    }
+	    100% {
+	        left: calc( 100% + 100px );
+	    }
+	}
+
+	.p{
+	  position:fixed;
+	  left:0px;
+	  top:50px;
+	  width:1px;
+	  height:1px;
+	  background-color:white;
+	  position:fixed;
+	  animation-timing-function: linear;
+	  animation-iteration-count: infinite;
+	}
+	.p::before{
+	  position:absolute;
+	  display:block;
+	  content:"";
+	  width:100px;
+	  right:1px;
+	  top:0px;
+	  height:1px;
+	  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(255,255,255,0.4) 100%);
+	}
+
+	.p1{
+		animation-name:p1;
+	  animation-duration: #{$interval*60 + $duration + 's'};
+	  top: 10%;
+	}
+	.p2{
+		animation-name:p2;
+	  animation-duration: #{$interval*60*2 + $duration + 's'};
+	  top:40%;
+	}
+	.p3{
+		animation-name:p3;
+	  animation-duration: #{$interval*60*3 + $duration + 's'};
+	  top:80%;
+	}
+}

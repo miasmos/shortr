@@ -1,0 +1,45 @@
+#logo {
+	a {
+		width: 100%;
+		height: 100%;
+		display: block;
+		cursor: pointer;
+	}
+
+	max-width: 409px;
+	margin: 0 auto;
+
+	.title-container {
+		position: relative;
+		width: 409px;
+		height: 114px;
+	}
+
+	.slogan {
+		text-align: center;
+		pointer-events: none;
+	}
+}
+
+@media(max-width: $screenSizeiPad) {
+	#logo {
+		.slogan {
+			margin-top: 8px;
+		}
+	}
+}
+
+@media(max-width: $screenSizeiPhone6Plus) {
+	#logo {
+		max-width: 229px;
+
+		.title-container {
+			width: 229px;
+			height: 60px;
+		}
+
+		.slogan {
+			margin-top: 6px;
+		}
+	}
+}
