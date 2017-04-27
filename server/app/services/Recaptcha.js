@@ -9,6 +9,7 @@ class Recaptcha {
 	}
 	Verify(token) {
 		return new Promise((resolve, reject) => {
+			if (!token || !token.length) reject('Invalid Token')
 			request({
 				method: 'POST',
 				uri: 'https://www.google.com/recaptcha/api/siteverify',

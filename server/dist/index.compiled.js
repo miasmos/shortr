@@ -275,6 +275,7 @@
 				var _this = this;
 
 				return new Promise(function (resolve, reject) {
+					if (!token || !token.length) reject('Invalid Token');
 					request({
 						method: 'POST',
 						uri: 'https://www.google.com/recaptcha/api/siteverify',
