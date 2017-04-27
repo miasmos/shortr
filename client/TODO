@@ -1,9 +1,19 @@
+- Now
 Set up workflow to copy static files from /client/app/images to /server/dist/static/images
 Analytics dashboard
 Rate limiting
-Tie shortened url requests to captcha tokens
 Clean up mobile CSS
 Transition to privacy/terms
-Fix ssl cert on android browsers
-Add http2
 Add button feedback to mobile? Is it needed?
+Add router for privacy/terms
+Refactor using redux
+Add additional param validation?
+Proper logging
+Install helmet / verify libraries used don't have any known vulnerabilities
+Continuous integration
+
+- Future
+(Free) User accounts to track created hashes
+(Premium) Hash categorization / subcategorization
+(Premium) Hash labels
+(Premium) Analytics per category

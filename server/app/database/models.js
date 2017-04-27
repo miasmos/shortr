@@ -20,6 +20,11 @@ export default class Models {
 				type: Sequelize.TEXT,
 				field: 'hash',
 				allowNull: false
+			},
+			ip: {
+				type: Sequelize.TEXT,
+				field: 'ip',
+				allowNull: true
 			}
 		}, {
 			indexes: [

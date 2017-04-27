@@ -43,7 +43,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone6Plus) {
+@media(max-width: $screenWidthiPhone6Plus) {
 	#termsprivacy {
 		min-width: 335px;
 
@@ -53,7 +53,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone6) {
+@media(max-width: $screenWidthiPhone6) {
 	#termsprivacy {
 		min-width: 305px;
 		font-size: 10pt;
@@ -65,7 +65,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone5) {
+@media(max-width: $screenWidthiPhone5) {
 	#termsprivacy {
 		min-width: 265px;
 

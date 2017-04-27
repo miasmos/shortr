@@ -5,10 +5,4 @@ export class Messages {
 			link: link
 		}
 	}
-
-	static Recaptcha(success) {
-		return {
-			success: success
-		}
-	}
 }

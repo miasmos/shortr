@@ -47,7 +47,7 @@ body {
 	height: 100%;
 
   	.wrapper {
-  		background: url('/static/images/logo-background.jpg') no-repeat center center fixed; 
+  		background: url('/static/images/logo-background.jpg') no-repeat center center fixed;
   		background-size: cover;
   		width: inherit;
   		height: inherit;
@@ -93,13 +93,13 @@ body {
 	}
 }
 
-@media(max-width: $screenSizeiPad) {
+@media(max-width: $screenWidthiPad) {
 	body {
 		font-size: 19pt;
 	}
 }
 
-@media(max-width: $screenSizeiPhone6Plus) {
+@media(max-width: $screenWidthiPhone6Plus) {
 	body {
 		font-size: 11pt;
 	}
@@ -112,7 +112,7 @@ body {
 	}
 }
 
-@media(max-width: $screenSizeiPhone6) {
+@media(max-width: $screenWidthiPhone6) {
 	#app {
 		.user-interaction {
 			width: 305px;
@@ -120,7 +120,7 @@ body {
 	}
 }
 
-@media(max-width: $screenSizeiPhone5) {
+@media(max-width: $screenWidthiPhone5) {
 	#app {
 		.user-interaction {
 			width: 265px;

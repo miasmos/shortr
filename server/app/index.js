@@ -9,6 +9,7 @@ import {Messages} from './messages'
 import {ErrorExtended as Error} from './response/Error'
 import Server from './server'
 import {instance as Crypto} from './crypto'
+import Util from './util'
 
 let server = new Server(),
 	path = require('path'),
@@ -42,29 +43,30 @@ class App {
 				})
 		})
 
-		server.Route('/api/hash/create/:url', (request, response) => {
-			let url = request.params.url,
+		server.Route('/api/hash/create/:url/:recaptchaToken', (request, response) => {
+			let url = request.params.url.toLowerCase(),
 				regex = url.match(/^(http|https|ftp):\/\//g)
 			if (!(!!regex && regex.length)) {
 				url = 'http://' + url
 			}
 
-			let hash = Crypto.TimestampHash(url)
-
-			this.db.Links.Create(url, hash)
-				.then(result => {
-					Response.Ok(response, Messages.Link(hash, url))
-				})
-				.catch(error => {
-					console.log(error)
-					Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
-				})
-		})
-
-		server.Route('/api/captcha/verify/:recaptchaToken', (request, response) => {
 			Recaptcha.Verify(request.params.recaptchaToken)
 				.then(data => {
-					Response.Ok(response, Messages.Recaptcha(data.success))
+					if ('success' in data && data.success) {
+						let hash = Crypto.TimestampHash(url),
+							ip = Util.GetRequestIP(request) || null
+
+						this.db.Links.Create(url, hash, ip)
+							.then(result => {
+								Response.Ok(response, Messages.Link(hash, url))
+							})
+							.catch(error => {
+								console.log(error)
+								Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+							})
+					} else {
+						Response.Error(response, new Error(Enum.error.message.RECAPTCHA_FAILED, Enum.error.code.FORBIDDEN))
+					}
 				})
 				.catch(error => {
 					console.error(error)
@@ -80,7 +82,7 @@ class App {
 			this.db.Links.Get(request.params.hash)
 				.then(result => {
 					if (result !== null) {
-						let link = result.get('link')	//https://localhost:1111/59USV
+						let link = result.get('link')
 
 						if (!!link) {
 							this.db.Users.Add(request.params.hash, request.headers['user-agent'])

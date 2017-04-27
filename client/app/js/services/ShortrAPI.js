@@ -2,16 +2,12 @@ import 'whatwg-fetch'
 import 'bluebird'
 
 export default class ShortrAPI {
-	static CreateLink(link) {
-		return this._resolve(`/api/hash/create/${encodeURIComponent(link)}`)
+	static CreateLink(link, token) {
+		return this._resolve(`/api/hash/create/${encodeURIComponent(link)}/${token}`)
 	}
 
 	static GetLink(hash) {
 		return this._resolve(`/api/hash/get/${hash}`)
-	}
-
-	static VerifyCaptcha(token) {
-		return this._resolve(`/api/captcha/verify/${token}`)
 	}
 
 	static _resolve(url) {
@@ -24,7 +20,7 @@ export default class ShortrAPI {
 							.catch(error => reject())
 					} else {
 						response.json()
-							.then(json => reject(json.data))
+							.then(json => reject(json))
 							.catch(error => reject())
 					}
 				})

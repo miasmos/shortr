@@ -26,7 +26,6 @@ class App extends React.Component {
 		this.state = {
 			submitted: false,
 			hash: false,
-			link: false,
 			error: QueryString.Error(),
 			terms: false,
 			privacy: false
@@ -42,7 +41,7 @@ class App extends React.Component {
 						{!this.state.error && !(this.state.terms || this.state.privacy) &&
 							<div>
 								<ReactCSSTransitionGroup transitionName="inputbox" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-									{!this.state.submitted && <InputBox requestLinkCreation={this.CreateLink.bind(this)} verifyCaptcha={this.VerifyCaptcha.bind(this)} setLink={this.SetLink.bind(this)} /> }
+									{!this.state.submitted && <InputBox requestLinkCreation={this.CreateLink.bind(this)} /> }
 								</ReactCSSTransitionGroup>
 								<ReactCSSTransitionGroup transitionName="link" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 									{this.state.submitted && !!this.state.hash && <LinkDisplay hash={this.state.hash} hide={!this.state.submitted} /> }
@@ -63,17 +62,17 @@ class App extends React.Component {
 		)
 	}
 
-	CreateLink(link) {
-		ShortrAPI.CreateLink(link)
+	CreateLink(link, token) {
+		ShortrAPI.CreateLink(link, token)
 			.then(response => {
 				this.setState({
 					...this.state,
 					hash: response.hash
 				})
 			})
-			.catch(error => {
-				console.error(error)
-				this.AddMessage('GENERIC_ERROR')
+			.catch(json => {
+				console.error(json.error)
+				this.AddMessage(json.error)
 			})
 
 		this.setState({
@@ -82,33 +81,16 @@ class App extends React.Component {
 		})
 	}
 
-	VerifyCaptcha(token) {
-		ShortrAPI.VerifyCaptcha(token)
-			.then(response => {
-				if (response.success && this.state.link) {
-					this.CreateLink(this.state.link)
-				} else if (!response.success) {
-					this.AddMessage('RECAPTCHA_FAILED')
-				}
-			})
-			.catch(error => {
-				console.error(error)
-				this.AddMessage('GENERIC_ERROR')
-			})
-	}
-
-	SetLink(link) {
-		this.setState({
-			...this.state,
-			link: link
-		})
-	}
-
 	AddMessage(key) {
 		if (key in Enum.error.message) {
 			this.setState({
 				...this.state,
 				error: Enum.error.message[key].replace(/(\. )/g, '.\n')
+			})
+		} else {
+			this.setState({
+				...this.state,
+				error: key.replace(/(\. )/g, '.\n')
 			})
 		}
 	}

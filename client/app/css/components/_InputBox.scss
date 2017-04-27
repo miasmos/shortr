@@ -61,10 +61,11 @@
 
 	button.disabled {
 		opacity: 0.5;
+		cursor: default;
 	}
 }
 
-@media(max-width: $screenSizeiPhone6Plus) {
+@media(max-width: $screenWidthiPhone6Plus) {
 	#inputbox {
 		$totalWidth: 335px;
 		$inputHeight: 60px;
@@ -112,7 +113,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone6) {
+@media(max-width: $screenWidthiPhone6) {
 	#inputbox {
 		$totalWidth: 305px;
 		$inputHeight: 60px;
@@ -160,7 +161,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone5) {
+@media(max-width: $screenWidthiPhone5) {
 	#inputbox {
 		$totalWidth: 265px;
 		$inputHeight: 60px;

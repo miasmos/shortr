@@ -21,7 +21,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPad) {
+@media(max-width: $screenWidthiPad) {
 	#logo {
 		.slogan {
 			margin-top: 8px;
@@ -29,7 +29,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone6Plus) {
+@media(max-width: $screenWidthiPhone6Plus) {
 	#logo {
 		max-width: 229px;
 

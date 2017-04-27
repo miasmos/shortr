@@ -2,21 +2,11 @@ var Sequelize = require('sequelize')
 import Table from './table'
 
 export default class Links extends Table {
-	Create(link, hash) {
+	Create(link, hash, ip) {
 		return this.model.create({
 			link: link,
-			hash: hash
-		})
-	}
-
-	UpdatePassword(salt, hash, email) {
-		return this.model.update({
-			salt: salt,
-			hash: hash
-		}, {
-			where: {
-				email: email
-			}
+			hash: hash,
+			ip: ip
 		})
 	}
 

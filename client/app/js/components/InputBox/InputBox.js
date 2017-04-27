@@ -1,6 +1,7 @@
 import React from 'react'
 import {instance as Keyboard} from '../../services/Keyboard'
 import {instance as Enum} from '../../../../../core/enums'
+import {instance as Environment} from '../../services/Environment'
 
 let validator = require('validator'),
 	config = require('../../config.json')
@@ -16,8 +17,9 @@ export default class InputBox extends React.Component {
 			buttonCSS: {}
 		}
 
+		this.recaptcha = Environment.IsProduction() ? config.production.recaptcha : config.development.recaptcha
 		this.typingTimeout = undefined
-		window.captchaCallback = this.CaptchaCallback.bind(this)
+		window.captchaCallback = this.CaptchaCallback.bind(this)  //google's captcha library requires it's callback to be in the global scope
 	}
 
 	render() {
@@ -37,15 +39,19 @@ export default class InputBox extends React.Component {
 						<div className={'input-background ' + (linkIsInvalid ? 'show' : '')}
 						></div>
 					</div>
-
+					<div
+						className="g-recaptcha"
+						data-sitekey={this.recaptcha}
+						data-theme="dark"
+						data-callback="captchaCallback"
+						data-size="invisible"
+					>
+					</div>
 					<button type="button"
 						onClick={this.OnSubmit.bind(this)}
 						style={this.state.buttonCSS}
 						disabled={this.state.linkValid ? '' : 'disabled'}
-						className={'g-recaptcha ' + (this.state.linkValid ? '' : 'disabled')}
-						data-sitekey={config.recaptcha.public}
-						data-theme="dark"
-						data-callback="captchaCallback"
+						className={this.state.linkValid ? '' : 'disabled'}
 						onMouseDown={this.OnButtonMouseDown.bind(this)}
 						onMouseUp={this.OnButtonMouseUp.bind(this)}
 						onMouseLeave={this.OnButtonMouseLeave.bind(this)}
@@ -56,7 +62,7 @@ export default class InputBox extends React.Component {
 	}
 
 	CaptchaCallback(token) {
-		this.props.verifyCaptcha(token)
+		this.props.requestLinkCreation(this.state.link, token)
 	}
 
 	componentDidMount() {
@@ -66,7 +72,6 @@ export default class InputBox extends React.Component {
 	OnInputKeyDown(event) {
 		if (Keyboard.IsPressed(event, Enum.keys.ENTER) && this.state.linkValid) {
 			event.preventDefault()
-			window.grecaptcha.execute()
 			this.OnSubmit()
 		} else {
 			this.OnLinkChange(event)
@@ -122,7 +127,7 @@ export default class InputBox extends React.Component {
 		if (this.state.submitted) {
 			return
 		}
-		this.props.setLink(this.state.link)
+		window.grecaptcha.execute()
 		this.refs.input.blur()
 
 		this.setState({

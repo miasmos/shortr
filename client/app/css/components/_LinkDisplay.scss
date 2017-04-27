@@ -22,7 +22,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone6Plus) {
+@media(max-width: $screenWidthiPhone6Plus) {
 	#link {
 		.link {
 			font-size: 24pt;
@@ -34,7 +34,7 @@
 	}
 }
 
-@media(max-width: $screenSizeiPhone6) {
+@media(max-width: $screenWidthiPhone6) {
 	#link {
 		.link {
 			font-size: 20pt;
@@ -47,7 +47,7 @@
 }
 
 
-@media(max-width: $screenSizeiPhone5) {
+@media(max-width: $screenWidthiPhone5) {
 	#link {
 		.link {
 			font-size: 16pt;

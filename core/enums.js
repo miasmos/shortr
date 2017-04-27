@@ -4,6 +4,11 @@ class Enums {
 			ENTER: 13
 		}
 
+		this.environment = {
+			PRODUCTION: 0,
+			DEVELOPMENT: 1
+		}
+
 		this.error = {
 			message: {
 				"NOT_FOUND": "Whoops. That page doesn't exist.",

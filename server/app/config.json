@@ -2,7 +2,7 @@
 	"development": {
 		"certificate": {
 			"key": "../app/cert/privkey.pem",
-			"cert": "../app/cert/cert.pem"
+			"cert": "../app/cert/fullchain.pem"
 		},
 		"host": "localhost",
 		"protocol": "https",
@@ -12,7 +12,7 @@
 	"production": {
 		"certificate": {
 			"key": "/etc/letsencrypt/live/shortr.li/privkey.pem",
-			"cert": "/etc/letsencrypt/live/shortr.li/cert.pem"
+			"cert": "/etc/letsencrypt/live/shortr.li/fullchain.pem"
 		},
 		"host": "shortr.li",
 		"protocol": "https",

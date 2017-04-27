@@ -30,14 +30,14 @@
 	}
 }
 
-@media(max-width: $screenSizeiPad) {
+@media(max-width: $screenWidthiPad) {
 	#footer {
 		height: 120px;
 		font-size: 14pt;
 	}
 }
 
-@media(max-width: $screenSizeiPhone6Plus) {
+@media(max-width: $screenWidthiPhone6Plus) {
 	#footer {
 		height: 80px;
 		font-size: 9pt;
