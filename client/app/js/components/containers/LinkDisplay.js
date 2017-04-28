@@ -15,8 +15,7 @@ export default class LinkDisplay extends React.Component {
 	render() {
 		return (
 			<div id="link">
-				<div className="link" 
-					onMouseEnter={this.OnMouseEnter.bind(this)}
+				<div className="link"
 					onMouseLeave={this.OnMouseLeave.bind(this)}
 					onMouseDown={this.OnMouseDown.bind(this)}
 					onMouseUp={this.OnMouseUp.bind(this)}
@@ -32,17 +31,9 @@ export default class LinkDisplay extends React.Component {
 		)
 	}
 
-	OnMouseEnter(event) {
-		this.setState({
-			...this.state,
-			showContext: true
-		})
-	}
-
 	OnMouseLeave(event) {
 		this.setState({
 			...this.state,
-			showContext: false,
 			css: {}
 		})
 	}

@@ -10,9 +10,17 @@ Refactor using redux
 Add additional param validation?
 Proper logging
 Continuous integration
+Add animation to link / terms / privacy display
 
 - Future
 (Free) User accounts to track created hashes
 (Premium) Hash categorization / subcategorization
 (Premium) Hash labels
 (Premium) Analytics per category
+
+2/minute
+
+sql table
+rates
+	ip - text - tracks the users'
+	requests - number

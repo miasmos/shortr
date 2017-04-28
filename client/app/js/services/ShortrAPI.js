@@ -1,5 +1,6 @@
 import 'whatwg-fetch'
 import 'bluebird'
+import {instance as Enum} from '../../../../core/enums'
 
 export default class ShortrAPI {
 	static CreateLink(link, token) {
@@ -17,15 +18,15 @@ export default class ShortrAPI {
 					if (response.status === 200) {
 						response.json()
 							.then(json => resolve(json.data))
-							.catch(error => reject())
+							.catch(error => reject(Enum.error.message.GENERIC_ERROR))
 					} else {
 						response.json()
-							.then(json => reject(json))
-							.catch(error => reject())
+							.then(json => reject(json.error))
+							.catch(error => reject(Enum.error.message.GENERIC_ERROR))
 					}
 				})
 				.catch(error => {
-					reject({status: 500, data: {}})
+					reject(Enum.error.message.GENERIC_ERROR)
 				})
 		})
 	}
