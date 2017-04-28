@@ -1,22 +1,24 @@
+//TODO: Set up redux store
+
 'use strict'
-import {instance as Log} from './services/Log'
-import {instance as Window} from './services/Window'
-import {instance as QueryString} from './services/QueryString'
-import {instance as Enum} from '../../../core/enums'
-import ShortrAPI from './services/ShortrAPI'
+// import {instance as Log} from './services/Log'
+// import {instance as Window} from './services/Window'
+// import {instance as QueryString} from './services/QueryString'
+// import {instance as Enum} from '../../../core/enums'
+// import ShortrAPI from './services/ShortrAPI'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 require('../css/index.scss')
 
-import InputBox from './components/InputBox/InputBox'
-import Logo from './components/Logo/Logo'
-import LinkDisplay from './components/LinkDisplay/LinkDisplay'
-import Message from './components/Message/Message'
-import TermsPrivacy from './components/TermsPrivacy/TermsPrivacy'
-import Stars from './components/Stars/Stars'
-import Footer from './components/Footer/Footer'
+// import InputBox from './components/InputBox/InputBox'
+// import Logo from './components/Logo/Logo'
+// import LinkDisplay from './components/LinkDisplay/LinkDisplay'
+// import Message from './components/Message/Message'
+// import TermsPrivacy from './components/TermsPrivacy/TermsPrivacy'
+// import Stars from './components/Stars/Stars'
+// import Footer from './components/Footer/Footer'
 
 let config = require('./config.json')
 
@@ -94,37 +96,6 @@ class App extends React.Component {
 				error: key.replace(/(\. )/g, '.\n')
 			})
 		}
-	}
-
-	ClearMessage() {
-		this.setState({
-			...this.state,
-			error: false
-		})
-	}
-
-	ClearTermsPrivacy() {
-		this.setState({
-			...this.state,
-			terms: false,
-			privacy: false
-		})
-	}
-
-	ShowTerms() {
-		this.setState({
-			...this.state,
-			terms: true,
-			privacy: false
-		})
-	}
-
-	ShowPrivacy() {
-		this.setState({
-			...this.state,
-			privacy: true,
-			terms: false
-		})
 	}
 }
 

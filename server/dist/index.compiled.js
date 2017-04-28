@@ -124,27 +124,27 @@
 			if (!(!!regex && regex.length)) {
 				url = 'http://' + url;
 			}
+			console.log('GET /api/hash/create/' + url + '/:token');
+			// Recaptcha.Verify(request.params.recaptchaToken)
+			// 	.then(data => {
+			// 		if ('success' in data && data.success) {
+			var hash = _crypto.instance.TimestampHash(url),
+			    ip = _util2.default.GetRequestIP(request) || null;
 
-			_Recaptcha.instance.Verify(request.params.recaptchaToken).then(function (data) {
-				if ('success' in data && data.success) {
-					(function () {
-						var hash = _crypto.instance.TimestampHash(url),
-						    ip = _util2.default.GetRequestIP(request) || null;
-
-						_this.db.Links.Create(url, hash, ip).then(function (result) {
-							_Response.Response.Ok(response, _messages.Messages.Link(hash, url));
-						}).catch(function (error) {
-							console.log(error);
-							_Response.Response.Error(response, new _Error.ErrorExtended(_enums.instance.error.message.GENERIC_ERROR, _enums.instance.error.code.ERROR));
-						});
-					})();
-				} else {
-					_Response.Response.Error(response, new _Error.ErrorExtended(_enums.instance.error.message.RECAPTCHA_FAILED, _enums.instance.error.code.FORBIDDEN));
-				}
+			_this.db.Links.Create(url, hash, ip).then(function (result) {
+				_Response.Response.Ok(response, _messages.Messages.Link(hash, url));
 			}).catch(function (error) {
-				console.error(error);
+				console.log(error);
 				_Response.Response.Error(response, new _Error.ErrorExtended(_enums.instance.error.message.GENERIC_ERROR, _enums.instance.error.code.ERROR));
 			});
+			// } else {
+			// 	Response.Error(response, new Error(Enum.error.message.RECAPTCHA_FAILED, Enum.error.code.FORBIDDEN))
+			// }
+			// })
+			// .catch(error => {
+			// 	console.error(error)
+			// 	Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+			// })
 		});
 
 		server.Route('/api*', function (request, response) {

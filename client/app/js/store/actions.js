@@ -1,8 +1,9 @@
 import constants from './constants'
 import fetch from 'whatwg-fetch'
-import {instance as ShortrAPI} from '../services/ShortrAPI'
+import ShortrAPI from '../services/ShortrAPI'
 
-export const requestShortenedLink = (link, token) => (dispatch) => {
+export const requestShortenedLink = (link, token) => (dispatch, getState) => {
+	if (getState().fetching) return
 	dispatch({
 		type: constants.REQUEST_SHORTENED_LINK_PENDING
 	})

@@ -1,4 +1,4 @@
-export const constants = {
+const constants = {
 	"REQUEST_SHORTENED_LINK_PENDING": "REQUEST_SHORTENED_LINK_PENDING",
 	"REQUEST_SHORTENED_LINK_CANCELLED": "REQUEST_SHORTENED_LINK_CANCELLED",
 	"DISPLAY_ERROR": "DISPLAY_ERROR", //AddMEssage()
@@ -9,3 +9,5 @@ export const constants = {
 	"INPUT_VALID": "INPUT_VALID",
 	"INPUT_CHANGE": "INPUT_CHANGE"
 }
+
+export default constants

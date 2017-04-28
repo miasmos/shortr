@@ -49,10 +49,10 @@ class App {
 			if (!(!!regex && regex.length)) {
 				url = 'http://' + url
 			}
-
-			Recaptcha.Verify(request.params.recaptchaToken)
-				.then(data => {
-					if ('success' in data && data.success) {
+			console.log(`GET /api/hash/create/${url}/:token`)
+			// Recaptcha.Verify(request.params.recaptchaToken)
+			// 	.then(data => {
+			// 		if ('success' in data && data.success) {
 						let hash = Crypto.TimestampHash(url),
 							ip = Util.GetRequestIP(request) || null
 
@@ -64,14 +64,14 @@ class App {
 								console.log(error)
 								Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
 							})
-					} else {
-						Response.Error(response, new Error(Enum.error.message.RECAPTCHA_FAILED, Enum.error.code.FORBIDDEN))
-					}
-				})
-				.catch(error => {
-					console.error(error)
-					Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
-				})
+					// } else {
+					// 	Response.Error(response, new Error(Enum.error.message.RECAPTCHA_FAILED, Enum.error.code.FORBIDDEN))
+					// }
+				// })
+				// .catch(error => {
+				// 	console.error(error)
+				// 	Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+				// })
 		})
 
 		server.Route('/api*', (request, response) => {

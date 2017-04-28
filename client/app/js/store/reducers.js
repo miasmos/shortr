@@ -16,7 +16,7 @@ export const link = (state="", action) =>
 	action.type === constants.SHORTENED_LINK_SHOW ? `https://${config.url}/${action.payload}` : state
 
 export const fetching = (state=false, action) => {
-	swith(action.type) {
+	switch(action.type) {
 		case constants.REQUEST_SHORTENED_LINK_PENDING:
 			return true
 		case constants.REQUEST_SHORTENED_LINK:
@@ -38,10 +38,6 @@ export const inputValid = (state=false, action) =>
 
 export const inputSubmit = (state=false, action) =>
 	action.type === constants.INPUT_SUBMIT ? action.payload : state
-
-export default combineReducers({
-
-})
 
 export default combineReducers({
 	error,
