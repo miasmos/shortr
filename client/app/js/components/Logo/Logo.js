@@ -9,7 +9,7 @@ export default class Logo extends React.Component {
 
 					<div className="title-background"></div>
 				</div></a>
-				<p className="slogan">Shorten your links. Easily.</p>
+				<p className="slogan">Shorten your links with ease.</p>
 			</div>
 		)
 	}
