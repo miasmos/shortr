@@ -8,21 +8,8 @@
 		text-align: center;
 	}
 
-	.back {
-		text-align: center;
-	    color: white;
-	    height: 47px;
+	.outlined-button {
 	    margin-top: 80px;
-
-		span {
-			font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		    font-size: 11pt;
-		    text-transform: uppercase;
-		    display: inline-block;
-		    height: 100%;
-		    border: 3px solid #FFF;
-		    padding: 9px 23px;
-		}
 	}
 }
 
@@ -54,7 +41,7 @@
 			font-size: 16pt;
 		}
 
-		.back {
+		.outlined-button {
 			margin-top: 70px;
 		}
 	}

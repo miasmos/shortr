@@ -98,6 +98,25 @@ body {
 	}
 }
 
+// .fade-enter {
+// 	opacity: 0;
+// }
+
+// .fade-enter.fade-enter-active {
+// 	opacity: 1;
+// 	transition: opacity 0.3s ease-in;
+// 	transition-delay: 0.3s;
+// }
+
+// .fade-leave {
+// 	opacity: 1;
+// }
+
+// .fade-leave.fade-leave-active {
+// 	opacity: 0;
+// 	transition: opacity 0.3s ease-in;
+// }
+
 @media(max-width: $screenWidthiPad) {
 	body {
 		font-size: 19pt;

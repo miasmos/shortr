@@ -1,0 +1,63 @@
+#privacy {
+	min-width: 530px;
+	margin-top: 40px;
+	font-size: 11pt;
+	line-height: 16pt;
+
+	.privacy-outer {
+		width: 100%;
+		height: 100%;
+		height: 347px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.privacy-inner {
+		top: 0;
+		left: 0;
+		right: -17px;
+		height: 100%;
+		overflow-y: scroll;
+		position: absolute;
+	}
+
+	.outlined-button {
+	    margin-top: 60px;
+	}
+}
+
+@media(max-width: $screenWidthiPhone6Plus) {
+	#privacy {
+		min-width: 335px;
+
+		.privacy-outer {
+			height: 244px;
+		}
+	}
+}
+
+@media(max-width: $screenWidthiPhone6) {
+	#privacy {
+		min-width: 305px;
+		font-size: 10pt;
+		line-height: 14pt;
+
+		.privacy-inner {
+			right: 0;
+		}
+	}
+}
+
+@media(max-width: $screenWidthiPhone5) {
+	#privacy {
+		min-width: 265px;
+
+		.privacy-outer {
+			height: 172px;
+		}
+
+		.outlined-button {
+			margin-top: 40px;
+		}
+	}
+}

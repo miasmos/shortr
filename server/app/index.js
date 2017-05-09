@@ -78,6 +78,10 @@ class App {
 			Response.Error(response, new Error(Enum.error.message.NOT_FOUND, Enum.error.code.NOT_FOUND))
 		})
 
+		server.Route(['/privacy', '/terms'], (request, response) => {
+			response.send(html)
+		})
+
 		server.Route('/:hash', (request, response) => {
 			this.db.Links.Get(request.params.hash)
 				.then(result => {

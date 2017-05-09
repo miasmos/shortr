@@ -2,6 +2,7 @@ import React from 'react'
 import {instance as Keyboard} from '../../services/Keyboard'
 import {instance as Enum} from '../../../../../core/enums'
 import {instance as Environment} from '../../services/Environment'
+import ClickEffect from '../ClickEffect'
 
 let validator = require('validator'),
 	config = require('../../config.json')
@@ -13,8 +14,7 @@ export default class InputBox extends React.Component {
 			link: '',
 			linkValid: false,
 			dirty: false,
-			submitted: false,
-			buttonCSS: {}
+			submitted: false
 		}
 
 		this.recaptcha = Environment.IsProduction() ? config.production.recaptcha : config.development.recaptcha
@@ -47,15 +47,13 @@ export default class InputBox extends React.Component {
 						data-size="invisible"
 					>
 					</div>
-					<button type="button"
-						onClick={this.OnSubmit.bind(this)}
-						style={this.state.buttonCSS}
-						disabled={this.state.linkValid ? '' : 'disabled'}
-						className={this.state.linkValid ? '' : 'disabled'}
-						onMouseDown={this.OnButtonMouseDown.bind(this)}
-						onMouseUp={this.OnButtonMouseUp.bind(this)}
-						onMouseLeave={this.OnButtonMouseLeave.bind(this)}
-					>Shorten</button>
+					<ClickEffect>
+						<button type="button"
+							onClick={this.OnSubmit.bind(this)}
+							disabled={this.state.linkValid ? '' : 'disabled'}
+							className={this.state.linkValid ? '' : 'disabled'}
+						>Shorten</button>
+					</ClickEffect>
 				</form>
 			</div>
 		)
@@ -76,29 +74,6 @@ export default class InputBox extends React.Component {
 		} else {
 			this.OnLinkChange(event)
 		}
-	}
-
-	OnButtonMouseDown(event) {
-		this.setState({
-			...this.state,
-			buttonCSS: {
-				transform: 'translate(1px, 1px)'
-			}
-		})
-	}
-
-	OnButtonMouseUp(event) {
-		this.setState({
-			...this.state,
-			buttonCSS: {}
-		})
-	}
-
-	OnButtonMouseLeave(event) {
-		this.setState({
-			...this.state,
-			buttonCSS: {}
-		})
 	}
 
 	OnLinkChange(event) {

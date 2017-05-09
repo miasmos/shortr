@@ -1,22 +1,19 @@
-#termsprivacy {
+#terms {
 	min-width: 530px;
 	margin-top: 40px;
 	font-size: 11pt;
 	line-height: 16pt;
 
-	.terms, .privacy {
+	.terms-outer {
 		width: 100%;
 		height: 100%;
 		height: 347px;
 		overflow: hidden;
 		position: relative;
-	}
-
-	.privacy {
 		height: 305px;
 	}
 
-	.terms-inner, .privacy-inner {
+	.terms-inner{
 		top: 0;
 		left: 0;
 		right: -17px;
@@ -25,60 +22,43 @@
 		position: absolute;
 	}
 
-	.back {
-		text-align: center;
-	    color: white;
-	    height: 47px;
+	.outlined-button {
 	    margin-top: 60px;
-
-		span {
-			font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		    font-size: 11pt;
-		    text-transform: uppercase;
-		    display: inline-block;
-		    height: 100%;
-		    border: 3px solid #FFF;
-		    padding: 9px 23px;
-		}
 	}
 }
 
 @media(max-width: $screenWidthiPhone6Plus) {
-	#termsprivacy {
+	#terms {
 		min-width: 335px;
 
-		.terms, .privacy {
+		.terms-outer {
 			height: 244px;
 		}
 	}
 }
 
 @media(max-width: $screenWidthiPhone6) {
-	#termsprivacy {
+	#terms {
 		min-width: 305px;
 		font-size: 10pt;
 		line-height: 14pt;
 
-		.terms-inner, .privacy-inner {
+		.terms-inner {
 			right: 0;
 		}
 	}
 }
 
 @media(max-width: $screenWidthiPhone5) {
-	#termsprivacy {
+	#terms {
 		min-width: 265px;
 
-		.terms, .privacy {
+		.terms-outer {
 			height: 172px;
 		}
 
-		.back {
+		.outlined-button {
 			margin-top: 40px;
-		}
-
-		.back span {
-			padding: 11px 23px;
 		}
 	}
 }

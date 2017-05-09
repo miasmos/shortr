@@ -3,20 +3,29 @@ import {instance as Enum} from '../../../../core/enums'
 var qs = require('qs')
 
 class QueryString {
-	constructor() {
-		let str = window.location.href
-		this.query = qs.parse(str.substring(str.indexOf('?') + 1, str.length))
-	}
-
 	Error() {
 		return this._resolve('error')
 	}
 
+	Object() {
+		return this.query
+	}
+
+	_parse() {
+		let str = window.location.href
+		return str.indexOf('?') > -1 ? qs.parse(str.substring(str.indexOf('?') + 1, str.length)) : false
+	}
+
 	_resolve(key) {
-		if (key in this.query && this.query[key].length) {
-			let value = this.query[key]
-			if (value in Enum.error.message) {
+		let q = this._parse()
+
+		if (!q) return false
+		if (key in q && q[key].length) {
+			let value = q[key]
+			if (key === 'error' && value in Enum.error.message) {
 				return Enum.error.message[value]
+			} else if (!!value) {
+				return value
 			}
 		}
 		return false
