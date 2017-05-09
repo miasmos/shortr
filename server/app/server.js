@@ -6,6 +6,7 @@ import {instance as Log} from './services/Log'
 
 var express = require('express'),
 	helmet = require('helmet'),
+	compression = require('compression'),
 	spdy = require('spdy'),
 	http = require('http'),
 	fs = require('fs'),
@@ -35,7 +36,8 @@ export default class Server {
 		}
 
 		app.use(helmet())
-		app.use('/static', express.static('static'))
+		app.use(compression())
+		app.use('/static', express.static('static', { maxAge: 24 * 60 * 60 * 1000 }))
 		this.app = app
 	}
 
