@@ -1,6 +1,7 @@
 'use strict'
 import {instance as Log} from './services/Log'
 import {instance as Recaptcha} from './services/Recaptcha'
+import {instance as UserAgent} from './services/UserAgent'
 import {instance as Enum} from '../../core/enums'
 import {Response} from './response/Response'
 import Database from './database/db'
@@ -74,11 +75,56 @@ class App {
 				})
 		})
 
+		server.Route('/api/hash/analytics/:hash', (request, response) => {
+			this.db.Links.Get(request.params.hash)
+				.then(result => {
+					if (result !== null) {
+						let link = result.get('link'),
+							created = new Date(result.get('createdAt')).getTime(),
+							data = {link, created, hash: request.params.hash}
+
+						this.db.Analytics.Get(request.params.hash)
+							.then(result => {
+								if (result !== null) {
+									UserAgent.Tally(result)
+										.then(totals => {
+											data = {
+												...data,
+												...totals
+											}
+											Response.Ok(response, Messages.Analytics(data))
+										})
+										.catch(error => {
+											console.error(error)
+											Response.Ok(response, Messages.Analytics(data))
+										})
+
+									return
+								}
+
+								Response.Ok(response, Messages.Analytics(data))
+							})
+							.catch(error => {
+								console.log(error)
+								Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+							})
+
+						return
+					}
+
+					Response.Ok(response, Messages.Analytics({}))
+				})
+				.catch(error => {
+					console.log(error)
+					Response.Error(response, new Error(Enum.error.message.GENERIC_ERROR, Enum.error.code.ERROR))
+				})
+		})
+
 		server.Route('/api*', (request, response) => {
 			Response.Error(response, new Error(Enum.error.message.NOT_FOUND, Enum.error.code.NOT_FOUND))
 		})
 
-		server.Route(['/privacy', '/terms'], (request, response) => {
+		server.Route(['/privacy', '/terms', '/analytics*'], (request, response) => {
 			response.send(html)
 		})
 
@@ -89,12 +135,17 @@ class App {
 						let link = result.get('link')
 
 						if (!!link) {
-							this.db.Users.Add(request.params.hash, request.headers['user-agent'])
+							response.redirect(link)
+
+							let ip = Util.GetRequestIP(request) || null,
+								referrer = request.get('Referrer') || null,
+								ua = UserAgent.Parse(request.headers['user-agent']) || {}
+
+							this.db.Analytics.Add(request.params.hash, ip, referrer, ua)
 								.catch(error => {
 									console.log(error)
 								})
 
-							response.redirect(link)
 							return
 						}
 					}

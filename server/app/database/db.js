@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize')
 import Models from './models'
 import Links from './tables/links'
-import Users from './tables/users'
+import Analytics from './tables/analytics'
 
 let instance = undefined
 
@@ -20,7 +20,7 @@ export default class Database {
 
 		this.models = new Models(this.connection)
 		this.Links = new Links(this.models.Links)
-		this.Users = new Users(this.models.Users)
+		this.Analytics = new Analytics(this.models.Analytics)
 
 		return instance
 	}

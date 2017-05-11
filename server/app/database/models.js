@@ -37,7 +37,7 @@ export default class Models {
 		})
 		this.Links.sync()
 
-		this.Users = connection.define('Users', {
+		this.Analytics = connection.define('Analytics', {
 			id: {
 				type: Sequelize.UUID,
 				defaultValue: Sequelize.UUIDV4,
@@ -49,14 +49,49 @@ export default class Models {
 				field: 'hash',
 				allowNull: false
 			},
-			agent: {
+			ip: {
 				type: Sequelize.TEXT,
-				field: 'agent',
+				field: 'ip',
+				allowNull: true
+			},
+			referrer: {
+				type: Sequelize.TEXT,
+				field: 'referrer',
+				allowNull: true
+			},
+			referrer: {
+				type: Sequelize.TEXT,
+				field: 'referrer',
+				allowNull: true
+			},
+			browser: {
+				type: Sequelize.TEXT,
+				field: 'browser',
+				allowNull: true
+			},
+			browser_version: {
+				type: Sequelize.TEXT,
+				field: 'browser_version',
+				allowNull: true
+			},
+			browser_layout: {
+				type: Sequelize.TEXT,
+				field: 'browser_layout',
+				allowNull: true
+			},
+			os: {
+				type: Sequelize.TEXT,
+				field: 'os',
+				allowNull: true
+			},
+			browser_description: {
+				type: Sequelize.TEXT,
+				field: 'browser_description',
 				allowNull: false
 			}
 		}, {
 			freezeTableName: true
 		})
-		this.Users.sync()
+		this.Analytics.sync()
 	}
 }

@@ -5,4 +5,8 @@ export class Messages {
 			link: link
 		}
 	}
+
+	static Analytics(arr) {
+		return arr
+	}
 }

@@ -1,11 +1,12 @@
 {
-	"url": "shortr.li",
 	"twitterHandle": "shortr_canada",
 	"port": "80",
 	"production": {
-		"recaptcha": "6Lfi0x4UAAAAAJL6WX-1M7Ue6bi9f2VS0jLuH2P7"
+		"recaptcha": "6Lfi0x4UAAAAAJL6WX-1M7Ue6bi9f2VS0jLuH2P7",
+		"url": "shortr.li"
 	},
 	"development": {
-		"recaptcha": "6Lfo0x4UAAAAAFa6hpbaSehNjuDqM0HH0X0mO501"
+		"recaptcha": "6Lfo0x4UAAAAAFa6hpbaSehNjuDqM0HH0X0mO501",
+		"url": "localhost"
 	}
 }

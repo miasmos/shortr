@@ -15,12 +15,8 @@ export default class Message extends React.Component {
 					}
 				</p>
 
-				<OutlinedButton linkToRoute={true} link="/" text="go back" replace={true} onClick={this.ClearError.bind(this)}></OutlinedButton>
+				<OutlinedButton linkToRoute={false} link="/" text="go back"></OutlinedButton>
 			</div>
 		)
-	}
-
-	ClearError() {
-		this.props.clearError()
 	}
  }

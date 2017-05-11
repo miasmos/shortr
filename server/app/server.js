@@ -3,11 +3,13 @@ import {instance as Enum} from '../../core/enums'
 import {ErrorExtended as Error} from './response/Error'
 import {Response} from './response/Response'
 import {instance as Log} from './services/Log'
+import {instance as Mimetypes} from './services/Mimetypes'
 
 var express = require('express'),
 	helmet = require('helmet'),
 	compression = require('compression'),
 	spdy = require('spdy'),
+	url = require('url'),
 	http = require('http'),
 	fs = require('fs'),
 	path = require('path'),
@@ -37,7 +39,20 @@ export default class Server {
 
 		app.use(helmet())
 		app.use(compression())
-		app.use('/static', express.static('static', { maxAge: 24 * 60 * 60 * 1000 }))
+		app.get('/static*', (request, response) => {
+			let filepath = path.join(__dirname, request.url)
+
+			fs.access(filepath, fs.constants.F_OK, (error) => {
+				if (!!error) {
+					response.redirect('/')
+				} else {
+					let mimetype = Mimetypes.getMime(request.url)
+					response.header('content-type', mimetype)
+					response.header('max-age', 24 * 60 * 60 * 1000)
+					response.sendFile(filepath)
+				}
+			})
+		})
 		this.app = app
 	}
 

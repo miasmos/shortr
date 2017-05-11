@@ -20,6 +20,25 @@
 		top: 17px;
 		right: -30px;
 	}
+
+	.button-container {
+		margin-top: 80px;
+		display: flex;
+		justify-content: center;
+
+		.button-inner {
+			display: inline-block;
+		}
+
+		.button-inner > * {
+			float: left;
+		}
+
+		.or {
+			padding: 0 25px;
+			line-height: 44px;
+		}
+	}
 }
 
 @media(max-width: $screenWidthiPhone6Plus) {
@@ -58,5 +77,9 @@
 		    top: 7px;
 		    right: -26px;
 		}
+
+		// .button-container {
+		// 	margin-top: 70px;
+		// }
 	}
 }

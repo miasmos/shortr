@@ -15,12 +15,12 @@ export default class OutlinedButton extends React.Component {
 			<div className="outlined-button">
 				<ClickEffect>
 					{ !!this.props.linkToRoute && (
-						<Link to={this.props.link} replace={!!this.props.replace ? true : false} onClick={this.props.onClick}>
+						<Link to={this.props.link} replace={!!this.props.replace ? true : false} onMouseUp={this.props.onClick}>
 							<span>{this.props.text}</span>
 						</Link>
 					)}
 					{ !this.props.linkToRoute && (
-						<a href={this.props.link} onClick={this.props.onClick}>
+						<a href={this.props.link} onMouseUp={this.props.onClick}>
 							<span>{this.props.text}</span>
 						</a>
 					)}

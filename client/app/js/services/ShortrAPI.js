@@ -10,6 +10,10 @@ export default class ShortrAPI {
 		return this._resolve(`/api/hash/get/${hash}`)
 	}
 
+	static Analytics(hash) {
+		return this._resolve(`/api/hash/analytics/${hash}`)
+	}
+
 	static _resolve(url) {
 		return new Promise((resolve, reject) => {
 			fetch(url)

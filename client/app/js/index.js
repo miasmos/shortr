@@ -17,6 +17,7 @@ import LinkDisplay from './components/LinkDisplay/LinkDisplay'
 import Message from './components/Message/Message'
 import Terms from './components/Terms/Terms'
 import Privacy from './components/Privacy/Privacy'
+import Analytics from './components/Analytics/Analytics'
 import Stars from './components/Stars/Stars'
 import Footer from './components/Footer/Footer'
 
@@ -37,7 +38,7 @@ class App extends React.Component {
 			<Router>
 				<div className="wrapper">
 					<div className="content">
-						<Route render={({location}) => (
+						<Route render={({ location, router }) => (
 							// <ReactCSSTransitionGroup transitionName="fade" transitionEnterTimeout={0} transitionLeaveTimeout={0}>
 								<Route location={location} key={location.key} render={() => (
 									<div>
@@ -49,17 +50,24 @@ class App extends React.Component {
 												) : (
 													<div className="user-interaction">
 														{!this.state.submitted && <InputBox requestLinkCreation={this.CreateLink.bind(this)} /> }
-														{this.state.submitted && !!this.state.hash && <LinkDisplay hash={this.state.hash} hide={!this.state.submitted} /> }
+														{this.state.submitted && !!this.state.hash && <LinkDisplay hash={this.state.hash} hide={!this.state.submitted} clearLink={this.ClearLink.bind(this)} /> }
 													</div>
 												)
 											)} />
 											<Route path="/privacy" component={Privacy} />
 											<Route path="/terms" component={Terms} />
+											<Route path="/analytics/:hash" component={() => (
+												this.state.error ? (
+													<Redirect to="/error" />
+												) : (
+													<Analytics addMessage={this.AddMessage.bind(this)} location={location} />
+												)
+											)} />
 											<Route path="/error" component={() => (
-												<Message text={QueryString.Error() || this.state.error || Enum.error.message.GENERIC_ERROR} clearError={this.ClearError.bind(this)} />
+												<Message text={QueryString.Error() || this.state.error || Enum.error.message.GENERIC_ERROR} />
 											)} />
 											<Route component={() => (
-												<Message text={Enum.error.message.NOT_FOUND} clearError={this.ClearError.bind(this)} />
+												<Message text={Enum.error.message.NOT_FOUND} />
 											)} />
 										</Switch>
 									</div>
@@ -94,6 +102,8 @@ class App extends React.Component {
 				this.AddMessage(json.error)
 			})
 
+		window.grecaptcha.reset()
+
 		this.setState({
 			...this.state,
 			submitted: true
@@ -115,10 +125,11 @@ class App extends React.Component {
 		}
 	}
 
-	ClearError() {
+	ClearLink() {
 		this.setState({
 			...this.state,
-			error: false
+			submitted: false,
+			hash: false
 		})
 	}
 }
